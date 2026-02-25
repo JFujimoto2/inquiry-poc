@@ -1,0 +1,35 @@
+<%= form_with(model: [:admin, facility], class: "space-y-4") do |form| %>
+  <% if facility.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <ul>
+        <% facility.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, class: "block font-medium mb-1" %>
+    <%= form.text_field :name, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :sender_email, class: "block font-medium mb-1" %>
+    <%= form.email_field :sender_email, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :sender_domain, class: "block font-medium mb-1" %>
+    <%= form.text_field :sender_domain, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :email_signature, class: "block font-medium mb-1" %>
+    <%= form.text_area :email_signature, rows: 5, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+  </div>
+<% end %>

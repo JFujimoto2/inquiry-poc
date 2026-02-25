@@ -1,0 +1,41 @@
+class InquiriesController < ApplicationController
+  allow_unauthenticated_access
+
+  def new
+    @inquiry = Inquiry.new
+    @facilities = Facility.order(:name)
+  end
+
+  def create
+    @inquiry = Inquiry.new(inquiry_params)
+
+    calculator = QuoteCalculator.new(@inquiry)
+    result = calculator.calculate
+    @inquiry.total_amount = result.total
+
+    if @inquiry.save
+      quote = @inquiry.create_quote!(status: "pending")
+      QuoteProcessingJob.perform_later(quote.id)
+      redirect_to thank_you_inquiries_path
+    else
+      @facilities = Facility.order(:name)
+      render :new, status: :unprocessable_entity
+    end
+  rescue QuoteCalculator::PriceNotFoundError => e
+    @inquiry.errors.add(:base, "Price configuration is incomplete. Please contact us.")
+    @facilities = Facility.order(:name)
+    render :new, status: :unprocessable_entity
+  end
+
+  def thank_you; end
+
+  private
+
+  def inquiry_params
+    params.require(:inquiry).permit(
+      :facility_id, :desired_date, :num_people,
+      :conference_room, :accommodation, :breakfast, :lunch, :dinner,
+      :company_name, :contact_name, :email
+    )
+  end
+end

@@ -1,0 +1,17 @@
+<div class="bg-white shadow rounded p-6">
+  <h1 class="text-2xl font-bold mb-4">Email Template: <%= @email_template.facility.name %></h1>
+
+  <dl class="space-y-2">
+    <dt class="font-medium text-gray-600">Subject</dt>
+    <dd class="mb-3"><%= @email_template.subject %></dd>
+
+    <dt class="font-medium text-gray-600">Body</dt>
+    <dd class="mb-3 whitespace-pre-wrap bg-gray-50 p-3 rounded"><%= @email_template.body %></dd>
+  </dl>
+
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Preview", preview_admin_email_template_path(@email_template), class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+    <%= link_to "Edit", edit_admin_email_template_path(@email_template), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= link_to "Back", admin_email_templates_path, class: "text-blue-600 hover:underline self-center" %>
+  </div>
+</div>
