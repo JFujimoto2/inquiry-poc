@@ -1,2 +1,6 @@
 # System documents
 docs/システム刷新計画書.md
+
+# Environment variables
+.env
+.env.*
