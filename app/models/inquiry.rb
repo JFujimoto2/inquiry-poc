@@ -1,6 +1,8 @@
 class Inquiry < ApplicationRecord
   belongs_to :facility
+  belongs_to :customer, optional: true
   has_one :quote, dependent: :destroy
+  has_one :reservation, dependent: :destroy
 
   validates :desired_date, presence: true
   validates :num_people, presence: true, numericality: { greater_than: 0 }

@@ -1,0 +1,43 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Change Requests</h1>
+</div>
+
+<div class="mb-6 flex gap-2">
+  <%= link_to "All", admin_change_requests_path, class: "px-3 py-1 rounded #{params[:status].blank? ? 'bg-blue-600 text-white' : 'bg-gray-200'}" %>
+  <% ChangeRequest::STATUSES.each do |status| %>
+    <%= link_to status.titleize, admin_change_requests_path(status:), class: "px-3 py-1 rounded #{params[:status] == status ? 'bg-blue-600 text-white' : 'bg-gray-200'}" %>
+  <% end %>
+</div>
+
+<table class="w-full bg-white shadow rounded">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="text-left p-3">ID</th>
+      <th class="text-left p-3">Customer</th>
+      <th class="text-left p-3">Reservation</th>
+      <th class="text-left p-3">Details</th>
+      <th class="text-left p-3">Status</th>
+      <th class="text-left p-3">Date</th>
+      <th class="text-left p-3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @change_requests.each do |cr| %>
+      <tr class="border-t">
+        <td class="p-3"><%= cr.id %></td>
+        <td class="p-3"><%= cr.customer.company_name %></td>
+        <td class="p-3">#<%= cr.reservation.id %> - <%= cr.reservation.facility.name %></td>
+        <td class="p-3"><%= truncate(cr.request_details, length: 50) %></td>
+        <td class="p-3">
+          <span class="px-2 py-1 rounded text-sm <%= cr.status == 'approved' ? 'bg-green-100 text-green-800' : cr.status == 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' %>">
+            <%= cr.status.titleize %>
+          </span>
+        </td>
+        <td class="p-3"><%= cr.created_at.strftime("%Y-%m-%d") %></td>
+        <td class="p-3">
+          <%= link_to "Show", admin_change_request_path(cr), class: "text-blue-600 hover:underline" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

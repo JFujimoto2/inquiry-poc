@@ -1,0 +1,43 @@
+<div class="bg-white shadow rounded p-6">
+  <h1 class="text-2xl font-bold mb-4">Inquiry #<%= @inquiry.id %></h1>
+
+  <dl class="space-y-2">
+    <dt class="font-medium text-gray-600">Facility</dt>
+    <dd class="mb-3"><%= @inquiry.facility.name %></dd>
+
+    <dt class="font-medium text-gray-600">Company</dt>
+    <dd class="mb-3"><%= @inquiry.company_name %></dd>
+
+    <dt class="font-medium text-gray-600">Contact</dt>
+    <dd class="mb-3"><%= @inquiry.contact_name %></dd>
+
+    <dt class="font-medium text-gray-600">Email</dt>
+    <dd class="mb-3"><%= @inquiry.email %></dd>
+
+    <dt class="font-medium text-gray-600">Desired Date</dt>
+    <dd class="mb-3"><%= @inquiry.desired_date %></dd>
+
+    <dt class="font-medium text-gray-600">Number of People</dt>
+    <dd class="mb-3"><%= @inquiry.num_people %></dd>
+
+    <dt class="font-medium text-gray-600">Total Amount</dt>
+    <dd class="mb-3"><%= @inquiry.total_amount ? number_to_currency(@inquiry.total_amount, unit: "¥", precision: 0) : "-" %></dd>
+
+    <dt class="font-medium text-gray-600">Quote Status</dt>
+    <dd class="mb-3"><%= @inquiry.quote&.status&.titleize || "-" %></dd>
+
+    <% if @inquiry.customer %>
+      <dt class="font-medium text-gray-600">Customer</dt>
+      <dd class="mb-3"><%= link_to @inquiry.customer.company_name, admin_customer_path(@inquiry.customer), class: "text-blue-600 hover:underline" %></dd>
+    <% end %>
+  </dl>
+
+  <div class="mt-6 flex space-x-4">
+    <% if @inquiry.reservation %>
+      <%= link_to "View Reservation", admin_reservation_path(@inquiry.reservation), class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+    <% else %>
+      <%= link_to "Create Reservation", new_admin_reservation_path(inquiry_id: @inquiry.id), class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+    <% end %>
+    <%= link_to "Back", admin_inquiries_path, class: "text-blue-600 hover:underline self-center" %>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="bg-white shadow rounded p-6">
+  <div class="flex justify-between items-start mb-4">
+    <h1 class="text-2xl font-bold">Reservation Details</h1>
+    <span class="px-3 py-1 rounded text-sm <%= reservation_status_class(@reservation.status) %>">
+      <%= @reservation.status.titleize %>
+    </span>
+  </div>
+
+  <dl class="space-y-2">
+    <dt class="font-medium text-gray-600">Facility</dt>
+    <dd class="mb-3"><%= @reservation.facility.name %></dd>
+
+    <dt class="font-medium text-gray-600">Check-in Date</dt>
+    <dd class="mb-3"><%= @reservation.check_in_date %></dd>
+
+    <% if @reservation.check_out_date %>
+      <dt class="font-medium text-gray-600">Check-out Date</dt>
+      <dd class="mb-3"><%= @reservation.check_out_date %></dd>
+    <% end %>
+
+    <dt class="font-medium text-gray-600">Number of Guests</dt>
+    <dd class="mb-3"><%= @reservation.num_people %></dd>
+
+    <% if @reservation.total_amount %>
+      <dt class="font-medium text-gray-600">Total Amount</dt>
+      <dd class="mb-3"><%= number_to_currency(@reservation.total_amount, unit: "¥", precision: 0) %></dd>
+    <% end %>
+
+    <% if @reservation.confirmed_at %>
+      <dt class="font-medium text-gray-600">Confirmed At</dt>
+      <dd class="mb-3"><%= @reservation.confirmed_at.strftime("%Y-%m-%d %H:%M") %></dd>
+    <% end %>
+  </dl>
+
+  <div class="mt-6 flex space-x-4">
+    <% if @reservation.status.in?(%w[pending_confirmation confirmed]) %>
+      <%= link_to "Request Change", new_mypage_reservation_change_request_path(@reservation), class: "bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" %>
+    <% end %>
+    <%= link_to "Back to Dashboard", mypage_root_path, class: "text-blue-600 hover:underline self-center" %>
+  </div>
+</div>
+
+<% if @reservation.change_requests.any? %>
+  <div class="mt-8">
+    <h2 class="text-xl font-bold mb-4">Change Requests</h2>
+    <div class="space-y-4">
+      <% @reservation.change_requests.order(created_at: :desc).each do |cr| %>
+        <div class="bg-white shadow rounded p-4">
+          <div class="flex justify-between items-start">
+            <p class="text-gray-700"><%= cr.request_details %></p>
+            <span class="px-2 py-1 rounded text-sm <%= cr.status == 'approved' ? 'bg-green-100 text-green-800' : cr.status == 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' %>">
+              <%= cr.status.titleize %>
+            </span>
+          </div>
+          <% if cr.admin_response.present? %>
+            <p class="mt-2 text-sm text-gray-600"><strong>Response:</strong> <%= cr.admin_response %></p>
+          <% end %>
+          <p class="mt-1 text-xs text-gray-400"><%= cr.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

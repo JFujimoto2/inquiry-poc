@@ -3,7 +3,7 @@ class QuoteMailer < ApplicationMailer
     @quote = quote
     @inquiry = quote.inquiry
     @facility = @inquiry.facility
-    template = @facility.email_template
+    template = @facility.email_templates.find_by!(template_type: "quote")
 
     subject = interpolate(template.subject)
     @body_text = interpolate(template.body)

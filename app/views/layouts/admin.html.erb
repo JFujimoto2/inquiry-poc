@@ -15,6 +15,9 @@
         <div class="flex items-center space-x-6">
           <span class="font-bold text-lg">Admin</span>
           <%= link_to "Dashboard", admin_root_path, class: "hover:text-gray-300" %>
+          <%= link_to "Inquiries", admin_inquiries_path, class: "hover:text-gray-300" %>
+          <%= link_to "Reservations", admin_reservations_path, class: "hover:text-gray-300" %>
+          <%= link_to "Customers", admin_customers_path, class: "hover:text-gray-300" %>
           <%= link_to "Facilities", admin_facilities_path, class: "hover:text-gray-300" %>
           <%= link_to "Calendar", admin_calendar_types_path, class: "hover:text-gray-300" %>
           <%= link_to "Prices", admin_price_masters_path, class: "hover:text-gray-300" %>

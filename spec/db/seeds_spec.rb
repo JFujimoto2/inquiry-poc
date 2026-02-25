@@ -22,7 +22,7 @@ RSpec.describe "db/seeds.rb" do
   it "creates email templates for all facilities" do
     Rails.application.load_seed
     Facility.find_each do |facility|
-      expect(facility.email_template).to be_present
+      expect(facility.email_templates).to be_present
     end
   end
 end

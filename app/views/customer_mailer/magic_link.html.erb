@@ -1,0 +1,7 @@
+<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2>Login to Your Mypage</h2>
+  <p>Dear <%= @customer.contact_name %>,</p>
+  <p>Click the link below to access your mypage:</p>
+  <p><%= link_to "Login to Mypage", @magic_link_url %></p>
+  <p>This link will expire in 30 minutes.</p>
+</div>
