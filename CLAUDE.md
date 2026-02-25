@@ -15,7 +15,7 @@
 
 ## 開発運用ルール
 
-- mainへの直接push禁止。必ずPR経由でマージする
+- mainへの直接push禁止。必ずPR経由でマージする（リポジトリAdminはバイパス可）
 - ブランチ名: `feature/*`, `fix/*`, `hotfix/*`
 - コミットメッセージ: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`
 - 詳細は `docs/DEVELOPMENT.md` を参照
