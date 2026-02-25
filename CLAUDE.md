@@ -13,6 +13,13 @@
 - `docs/システム刷新計画書.md` は社内専用ドキュメントのため `.gitignore` で除外済み
 - コミット前に `git diff --cached` で機密情報の混入がないか確認すること
 
+## 開発運用ルール
+
+- mainへの直接push禁止。必ずPR経由でマージする
+- ブランチ名: `feature/*`, `fix/*`, `hotfix/*`
+- コミットメッセージ: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`
+- 詳細は `docs/DEVELOPMENT.md` を参照
+
 ## 技術スタック
 
 - Ruby on Rails 8.x / Hotwire（Turbo + Stimulus）
