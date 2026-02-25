@@ -19,7 +19,7 @@ class ReservationStatusManager
   def transition_to!(new_status)
     unless can_transition_to?(new_status)
       raise InvalidTransitionError,
-        "Cannot transition from #{@reservation.status} to #{new_status}"
+        "「#{@reservation.status}」から「#{new_status}」への変更はできません"
     end
 
     @reservation.update!(status: new_status)

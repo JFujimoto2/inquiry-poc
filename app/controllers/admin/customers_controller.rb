@@ -18,7 +18,7 @@ module Admin
     def create
       @customer = Customer.new(customer_params)
       if @customer.save
-        redirect_to admin_customer_path(@customer), notice: "Customer was successfully created."
+        redirect_to admin_customer_path(@customer), notice: "顧客を作成しました。"
       else
         render :new, status: :unprocessable_entity
       end
@@ -28,7 +28,7 @@ module Admin
 
     def update
       if @customer.update(customer_params)
-        redirect_to admin_customer_path(@customer), notice: "Customer was successfully updated."
+        redirect_to admin_customer_path(@customer), notice: "顧客を更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -36,7 +36,7 @@ module Admin
 
     def destroy
       @customer.destroy!
-      redirect_to admin_customers_path, notice: "Customer was successfully deleted.", status: :see_other
+      redirect_to admin_customers_path, notice: "顧客を削除しました。", status: :see_other
     end
 
     private

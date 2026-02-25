@@ -10,27 +10,27 @@
   <% end %>
 
   <div>
-    <%= form.label :company_name, class: "block font-medium mb-1" %>
+    <%= form.label :company_name, "会社名", class: "block font-medium mb-1" %>
     <%= form.text_field :company_name, class: "w-full border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :contact_name, class: "block font-medium mb-1" %>
+    <%= form.label :contact_name, "担当者名", class: "block font-medium mb-1" %>
     <%= form.text_field :contact_name, class: "w-full border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :email, class: "block font-medium mb-1" %>
+    <%= form.label :email, "メールアドレス", class: "block font-medium mb-1" %>
     <%= form.email_field :email, class: "w-full border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :phone, class: "block font-medium mb-1" %>
+    <%= form.label :phone, "電話番号", class: "block font-medium mb-1" %>
     <%= form.telephone_field :phone, class: "w-full border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :notes, class: "block font-medium mb-1" %>
+    <%= form.label :notes, "備考", class: "block font-medium mb-1" %>
     <%= form.text_area :notes, rows: 4, class: "w-full border rounded p-2" %>
   </div>
 

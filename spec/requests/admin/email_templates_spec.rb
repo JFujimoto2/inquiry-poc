@@ -50,8 +50,8 @@ RSpec.describe "Admin::EmailTemplates", type: :request do
     it "renders preview with interpolated variables" do
       get preview_admin_email_template_path(email_template)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Quote for Sample Company")
-      expect(response.body).to include("Dear Sample Contact")
+      expect(response.body).to include("Quote for サンプル株式会社")
+      expect(response.body).to include("Dear サンプル担当者")
     end
   end
 end

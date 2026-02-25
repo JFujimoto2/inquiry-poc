@@ -1,18 +1,18 @@
 <div class="flex justify-between items-center mb-6">
-  <h1 class="text-2xl font-bold">Inquiries</h1>
+  <h1 class="text-2xl font-bold">問い合わせ一覧</h1>
 </div>
 
 <table class="w-full bg-white shadow rounded">
   <thead class="bg-gray-100">
     <tr>
       <th class="text-left p-3">ID</th>
-      <th class="text-left p-3">Facility</th>
-      <th class="text-left p-3">Company</th>
-      <th class="text-left p-3">Contact</th>
-      <th class="text-left p-3">Desired Date</th>
-      <th class="text-left p-3">Quote</th>
-      <th class="text-left p-3">Reservation</th>
-      <th class="text-left p-3">Actions</th>
+      <th class="text-left p-3">施設</th>
+      <th class="text-left p-3">会社名</th>
+      <th class="text-left p-3">担当者</th>
+      <th class="text-left p-3">希望日</th>
+      <th class="text-left p-3">見積</th>
+      <th class="text-left p-3">予約</th>
+      <th class="text-left p-3">操作</th>
     </tr>
   </thead>
   <tbody>
@@ -23,16 +23,16 @@
         <td class="p-3"><%= inquiry.company_name %></td>
         <td class="p-3"><%= inquiry.contact_name %></td>
         <td class="p-3"><%= inquiry.desired_date %></td>
-        <td class="p-3"><%= inquiry.quote&.status || "-" %></td>
+        <td class="p-3"><%= inquiry.quote ? quote_status_label(inquiry.quote.status) : "-" %></td>
         <td class="p-3">
           <% if inquiry.reservation %>
-            <%= link_to inquiry.reservation.status.titleize, admin_reservation_path(inquiry.reservation), class: "text-blue-600 hover:underline" %>
+            <%= link_to reservation_status_label(inquiry.reservation.status), admin_reservation_path(inquiry.reservation), class: "text-blue-600 hover:underline" %>
           <% else %>
-            <%= link_to "Create Reservation", new_admin_reservation_path(inquiry_id: inquiry.id), class: "text-green-600 hover:underline" %>
+            <%= link_to "予約作成", new_admin_reservation_path(inquiry_id: inquiry.id), class: "text-green-600 hover:underline" %>
           <% end %>
         </td>
         <td class="p-3">
-          <%= link_to "Show", admin_inquiry_path(inquiry), class: "text-blue-600 hover:underline" %>
+          <%= link_to "詳細", admin_inquiry_path(inquiry), class: "text-blue-600 hover:underline" %>
         </td>
       </tr>
     <% end %>

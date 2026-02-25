@@ -14,7 +14,7 @@ module Admin
     def create
       @price_master = PriceMaster.new(price_master_params)
       if @price_master.save
-        redirect_to admin_price_masters_path, notice: "Price master was successfully created."
+        redirect_to admin_price_masters_path, notice: "料金マスタを作成しました。"
       else
         render :new, status: :unprocessable_entity
       end
@@ -24,7 +24,7 @@ module Admin
 
     def update
       if @price_master.update(price_master_params)
-        redirect_to admin_price_masters_path, notice: "Price master was successfully updated."
+        redirect_to admin_price_masters_path, notice: "料金マスタを更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -32,7 +32,7 @@ module Admin
 
     def destroy
       @price_master.destroy!
-      redirect_to admin_price_masters_path, notice: "Price master was successfully deleted.", status: :see_other
+      redirect_to admin_price_masters_path, notice: "料金マスタを削除しました。", status: :see_other
     end
 
     private

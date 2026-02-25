@@ -20,11 +20,11 @@ module Admin
       if params[:inquiry_id].present?
         inquiry = Inquiry.find(params[:inquiry_id])
         @reservation = CreateReservationFromInquiry.new(inquiry).call
-        redirect_to admin_reservation_path(@reservation), notice: "Reservation was successfully created from inquiry."
+        redirect_to admin_reservation_path(@reservation), notice: "問い合わせから予約を作成しました。"
       else
         @reservation = Reservation.new(reservation_params)
         if @reservation.save
-          redirect_to admin_reservation_path(@reservation), notice: "Reservation was successfully created."
+          redirect_to admin_reservation_path(@reservation), notice: "予約を作成しました。"
         else
           render :new, status: :unprocessable_entity
         end
@@ -35,7 +35,7 @@ module Admin
 
     def update
       if @reservation.update(reservation_params)
-        redirect_to admin_reservation_path(@reservation), notice: "Reservation was successfully updated."
+        redirect_to admin_reservation_path(@reservation), notice: "予約を更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -43,13 +43,13 @@ module Admin
 
     def destroy
       @reservation.destroy!
-      redirect_to admin_reservations_path, notice: "Reservation was successfully deleted.", status: :see_other
+      redirect_to admin_reservations_path, notice: "予約を削除しました。", status: :see_other
     end
 
     def transition
       manager = ReservationStatusManager.new(@reservation)
       manager.transition_to!(params[:status])
-      redirect_to admin_reservation_path(@reservation), notice: "Reservation status updated to #{params[:status].titleize}."
+      redirect_to admin_reservation_path(@reservation), notice: "予約ステータスを「#{ApplicationController.helpers.reservation_status_label(params[:status])}」に変更しました。"
     rescue ReservationStatusManager::InvalidTransitionError => e
       redirect_to admin_reservation_path(@reservation), alert: e.message
     end

@@ -13,7 +13,7 @@ module Admin
     def create
       @calendar_type = CalendarType.new(calendar_type_params)
       if @calendar_type.save
-        redirect_to admin_calendar_types_path, notice: "Calendar type was successfully created."
+        redirect_to admin_calendar_types_path, notice: "カレンダー種別を作成しました。"
       else
         render :new, status: :unprocessable_entity
       end
@@ -23,7 +23,7 @@ module Admin
 
     def update
       if @calendar_type.update(calendar_type_params)
-        redirect_to admin_calendar_types_path, notice: "Calendar type was successfully updated."
+        redirect_to admin_calendar_types_path, notice: "カレンダー種別を更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -31,7 +31,7 @@ module Admin
 
     def destroy
       @calendar_type.destroy!
-      redirect_to admin_calendar_types_path, notice: "Calendar type was successfully deleted.", status: :see_other
+      redirect_to admin_calendar_types_path, notice: "カレンダー種別を削除しました。", status: :see_other
     end
 
     def bulk_create
@@ -46,7 +46,7 @@ module Admin
       end
 
       redirect_to admin_calendar_types_path,
-        notice: "#{created_count} calendar type(s) created/updated."
+        notice: "#{created_count}件のカレンダー種別を作成・更新しました。"
     end
 
     private

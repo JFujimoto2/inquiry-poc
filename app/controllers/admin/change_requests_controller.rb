@@ -16,7 +16,7 @@ module Admin
       )
       ChangeRequestMailer.customer_response(@change_request).deliver_later
       redirect_to admin_change_request_path(@change_request),
-                  notice: "Change request #{@change_request.status}."
+                  notice: "変更リクエストを「#{ApplicationController.helpers.change_request_status_label(@change_request.status)}」にしました。"
     end
 
     private

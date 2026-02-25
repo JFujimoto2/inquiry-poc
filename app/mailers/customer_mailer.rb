@@ -5,7 +5,7 @@ class CustomerMailer < ApplicationMailer
 
     mail(
       to: customer.email,
-      subject: "Login Link - Mypage"
+      subject: "マイページ ログインリンク"
     )
   end
 end

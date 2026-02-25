@@ -16,7 +16,7 @@ RSpec.describe "Admin::Inquiries", type: :request do
     it "shows create reservation link for inquiries without reservation" do
       inquiry = create(:inquiry)
       get admin_inquiries_path
-      expect(response.body).to include("Create Reservation")
+      expect(response.body).to include("予約作成")
     end
   end
 
@@ -31,13 +31,13 @@ RSpec.describe "Admin::Inquiries", type: :request do
     it "shows create reservation button when no reservation exists" do
       inquiry = create(:inquiry)
       get admin_inquiry_path(inquiry)
-      expect(response.body).to include("Create Reservation")
+      expect(response.body).to include("予約を作成")
     end
 
     it "shows view reservation link when reservation exists" do
       reservation = create(:reservation)
       get admin_inquiry_path(reservation.inquiry)
-      expect(response.body).to include("View Reservation")
+      expect(response.body).to include("予約を表示")
     end
   end
 end

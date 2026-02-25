@@ -14,24 +14,24 @@ RSpec.describe "Inquiry form", type: :system do
   it "submits inquiry and shows thank you page" do
     visit new_inquiry_path
 
-    select "Test Resort", from: "Facility"
-    fill_in "Desired date", with: "2026-04-01"
-    fill_in "Number of People", with: "10"
-    check "Conference Room"
-    check "Lunch"
-    fill_in "Company name", with: "Test Corp"
-    fill_in "Contact name", with: "Taro Yamada"
-    fill_in "Email", with: "taro@example.com"
+    select "Test Resort", from: "施設"
+    fill_in "利用希望日", with: "2026-04-01"
+    fill_in "利用人数", with: "10"
+    check "会議室"
+    check "昼食"
+    fill_in "会社名", with: "Test Corp"
+    fill_in "担当者名", with: "Taro Yamada"
+    fill_in "メールアドレス", with: "taro@example.com"
 
-    click_button "Submit Inquiry"
+    click_button "問い合わせを送信"
 
-    expect(page).to have_content("Thank You")
+    expect(page).to have_content("お問い合わせありがとうございます")
   end
 
   it "shows validation errors" do
     visit new_inquiry_path
 
-    click_button "Submit Inquiry"
+    click_button "問い合わせを送信"
 
     expect(page).to have_content("can't be blank")
   end

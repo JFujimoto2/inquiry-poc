@@ -15,7 +15,7 @@ class Inquiry < ApplicationRecord
 
   def breakfast_requires_accommodation
     if breakfast? && !accommodation?
-      errors.add(:breakfast, "requires accommodation to be selected")
+      errors.add(:breakfast, "は宿泊を選択した場合のみ利用できます")
     end
   end
 end

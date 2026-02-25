@@ -42,8 +42,8 @@ RSpec.describe "Admin::Reservations", type: :request do
         reservation = create(:reservation, status: Reservation::STATUS_PENDING_CONFIRMATION)
         get admin_reservation_path(reservation)
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include("Confirmed")
-        expect(response.body).to include("Cancelled")
+        expect(response.body).to include("確定")
+        expect(response.body).to include("キャンセル済")
       end
     end
 

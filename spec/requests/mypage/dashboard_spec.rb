@@ -10,7 +10,7 @@ RSpec.describe "Mypage::Dashboard", type: :request do
       it "renders the dashboard" do
         get mypage_root_path
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include("My Reservations")
+        expect(response.body).to include("予約一覧")
       end
 
       it "shows only own reservations" do

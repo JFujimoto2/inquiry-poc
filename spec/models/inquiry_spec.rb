@@ -26,7 +26,7 @@ RSpec.describe Inquiry, type: :model do
       it "is invalid when breakfast is true but accommodation is false" do
         inquiry = build(:inquiry, breakfast: true, accommodation: false)
         expect(inquiry).not_to be_valid
-        expect(inquiry.errors[:breakfast]).to include("requires accommodation to be selected")
+        expect(inquiry.errors[:breakfast]).to include("は宿泊を選択した場合のみ利用できます")
       end
 
       it "is valid when both breakfast and accommodation are true" do

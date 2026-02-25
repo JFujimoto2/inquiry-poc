@@ -10,12 +10,12 @@
   <% end %>
 
   <div>
-    <%= form.label :date, class: "block font-medium mb-1" %>
+    <%= form.label :date, "日付", class: "block font-medium mb-1" %>
     <%= form.date_field :date, class: "border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :day_type, class: "block font-medium mb-1" %>
+    <%= form.label :day_type, "日種別", class: "block font-medium mb-1" %>
     <%= form.select :day_type, CalendarType::DAY_TYPES, {}, class: "border rounded p-2" %>
   </div>
 

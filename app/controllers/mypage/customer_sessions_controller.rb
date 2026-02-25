@@ -10,7 +10,7 @@ module Mypage
       if customer
         CustomerMagicLinkSender.new(customer).call
       end
-      redirect_to new_mypage_session_path, notice: "If your email is registered, you will receive a login link shortly."
+      redirect_to new_mypage_session_path, notice: "ご登録のメールアドレスにログインリンクをお送りしました。"
     end
 
     def verify
@@ -19,15 +19,15 @@ module Mypage
 
       if customer_session
         start_customer_session(customer_session)
-        redirect_to mypage_root_path, notice: "Successfully logged in."
+        redirect_to mypage_root_path, notice: "ログインしました。"
       else
-        redirect_to new_mypage_session_path, alert: "Invalid or expired link. Please request a new one."
+        redirect_to new_mypage_session_path, alert: "リンクが無効または期限切れです。再度リクエストしてください。"
       end
     end
 
     def destroy
       terminate_customer_session
-      redirect_to new_mypage_session_path, notice: "Logged out successfully.", status: :see_other
+      redirect_to new_mypage_session_path, notice: "ログアウトしました。", status: :see_other
     end
 
     private

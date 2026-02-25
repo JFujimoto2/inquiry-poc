@@ -47,8 +47,8 @@ RSpec.describe "Admin::ChangeRequests", type: :request do
       it "shows respond form for pending requests" do
         change_request = create(:change_request, status: ChangeRequest::STATUS_PENDING)
         get admin_change_request_path(change_request)
-        expect(response.body).to include("Approve")
-        expect(response.body).to include("Reject")
+        expect(response.body).to include("承認")
+        expect(response.body).to include("却下")
       end
     end
 

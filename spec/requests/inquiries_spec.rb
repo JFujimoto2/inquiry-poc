@@ -15,7 +15,7 @@ RSpec.describe "Inquiries", type: :request do
     it "renders the inquiry form" do
       get new_inquiry_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Inquiry Form")
+      expect(response.body).to include("お問い合わせフォーム")
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe "Inquiries", type: :request do
     it "renders the thank you page" do
       get thank_you_inquiries_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Thank You")
+      expect(response.body).to include("お問い合わせありがとうございます")
     end
   end
 end

@@ -14,13 +14,13 @@ RSpec.describe Reservation, type: :model do
       it "is invalid when check_out_date is before check_in_date" do
         reservation = build(:reservation, check_in_date: Date.new(2026, 4, 2), check_out_date: Date.new(2026, 4, 1))
         expect(reservation).not_to be_valid
-        expect(reservation.errors[:check_out_date]).to include("must be after check-in date")
+        expect(reservation.errors[:check_out_date]).to include("はチェックイン日より後の日付にしてください")
       end
 
       it "is invalid when check_out_date equals check_in_date" do
         reservation = build(:reservation, check_in_date: Date.new(2026, 4, 1), check_out_date: Date.new(2026, 4, 1))
         expect(reservation).not_to be_valid
-        expect(reservation.errors[:check_out_date]).to include("must be after check-in date")
+        expect(reservation.errors[:check_out_date]).to include("はチェックイン日より後の日付にしてください")
       end
 
       it "is valid when check_out_date is after check_in_date" do

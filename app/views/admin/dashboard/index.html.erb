@@ -1,33 +1,33 @@
-<h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+<h1 class="text-2xl font-bold mb-6">ダッシュボード</h1>
 
 <div class="grid grid-cols-4 gap-4 mb-8">
   <div class="bg-white shadow rounded p-4">
-    <div class="text-gray-600 text-sm">Total Inquiries</div>
+    <div class="text-gray-600 text-sm">問い合わせ総数</div>
     <div class="text-2xl font-bold"><%= @stats[:total_inquiries] %></div>
   </div>
   <div class="bg-white shadow rounded p-4">
-    <div class="text-gray-600 text-sm">Quotes Sent</div>
+    <div class="text-gray-600 text-sm">見積送信済</div>
     <div class="text-2xl font-bold text-green-600"><%= @stats[:quotes_sent] %></div>
   </div>
   <div class="bg-white shadow rounded p-4">
-    <div class="text-gray-600 text-sm">Quotes Pending</div>
+    <div class="text-gray-600 text-sm">見積処理中</div>
     <div class="text-2xl font-bold text-yellow-600"><%= @stats[:quotes_pending] %></div>
   </div>
   <div class="bg-white shadow rounded p-4">
-    <div class="text-gray-600 text-sm">Quotes Failed</div>
+    <div class="text-gray-600 text-sm">見積失敗</div>
     <div class="text-2xl font-bold text-red-600"><%= @stats[:quotes_failed] %></div>
   </div>
 </div>
 
-<h2 class="text-xl font-semibold mb-4">Recent Inquiries</h2>
+<h2 class="text-xl font-semibold mb-4">最近の問い合わせ</h2>
 <table class="w-full bg-white shadow rounded">
   <thead class="bg-gray-100">
     <tr>
-      <th class="text-left p-3">Date</th>
-      <th class="text-left p-3">Company</th>
-      <th class="text-left p-3">Facility</th>
-      <th class="text-left p-3">Amount</th>
-      <th class="text-left p-3">Quote Status</th>
+      <th class="text-left p-3">日時</th>
+      <th class="text-left p-3">会社名</th>
+      <th class="text-left p-3">施設</th>
+      <th class="text-left p-3">金額</th>
+      <th class="text-left p-3">見積ステータス</th>
     </tr>
   </thead>
   <tbody>
@@ -46,7 +46,7 @@
                   when 'generated' then 'bg-blue-100 text-blue-800'
                   when 'failed' then 'bg-red-100 text-red-800'
                   end %>">
-              <%= inquiry.quote.status.capitalize %>
+              <%= quote_status_label(inquiry.quote.status) %>
             </span>
           <% end %>
         </td>
