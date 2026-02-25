@@ -40,3 +40,7 @@
 
 # Test coverage
 /coverage/
+
+# Font files (large binaries, download manually)
+/app/assets/fonts/*.ttf
+/app/assets/fonts/*.otf
