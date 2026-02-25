@@ -70,7 +70,7 @@ class QuotePdfGenerator
   def render_line_items(pdf, result)
     return if result.line_items.empty?
 
-    table_data = [[ "Item", "Day Type", "Unit Price", "Qty", "Subtotal" ]]
+    table_data = [ [ "Item", "Day Type", "Unit Price", "Qty", "Subtotal" ] ]
 
     result.line_items.each do |item|
       table_data << [
