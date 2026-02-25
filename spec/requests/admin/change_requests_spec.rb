@@ -29,9 +29,9 @@ RSpec.describe "Admin::ChangeRequests", type: :request do
       end
 
       it "filters by pending status" do
-        pending_cr = create(:change_request, status: "pending")
+        pending_cr = create(:change_request, status: ChangeRequest::STATUS_PENDING)
         approved_cr = create(:change_request, :approved)
-        get admin_change_requests_path, params: { status: "pending" }
+        get admin_change_requests_path, params: { status: ChangeRequest::STATUS_PENDING }
         expect(response.body).to include(pending_cr.customer.company_name)
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe "Admin::ChangeRequests", type: :request do
       end
 
       it "shows respond form for pending requests" do
-        change_request = create(:change_request, status: "pending")
+        change_request = create(:change_request, status: ChangeRequest::STATUS_PENDING)
         get admin_change_request_path(change_request)
         expect(response.body).to include("Approve")
         expect(response.body).to include("Reject")
@@ -53,26 +53,26 @@ RSpec.describe "Admin::ChangeRequests", type: :request do
     end
 
     describe "PATCH /admin/change_requests/:id/respond" do
-      let(:change_request) { create(:change_request, status: "pending") }
+      let(:change_request) { create(:change_request, status: ChangeRequest::STATUS_PENDING) }
 
       it "approves the change request" do
         patch respond_admin_change_request_path(change_request),
-              params: { change_request: { status: "approved", admin_response: "Approved." } }
-        expect(change_request.reload.status).to eq("approved")
+              params: { change_request: { status: ChangeRequest::STATUS_APPROVED, admin_response: "Approved." } }
+        expect(change_request.reload.status).to eq(ChangeRequest::STATUS_APPROVED)
         expect(change_request.admin_response).to eq("Approved.")
         expect(response).to redirect_to(admin_change_request_path(change_request))
       end
 
       it "rejects the change request" do
         patch respond_admin_change_request_path(change_request),
-              params: { change_request: { status: "rejected", admin_response: "Cannot accommodate." } }
-        expect(change_request.reload.status).to eq("rejected")
+              params: { change_request: { status: ChangeRequest::STATUS_REJECTED, admin_response: "Cannot accommodate." } }
+        expect(change_request.reload.status).to eq(ChangeRequest::STATUS_REJECTED)
       end
 
       it "enqueues customer notification email" do
         expect {
           patch respond_admin_change_request_path(change_request),
-                params: { change_request: { status: "approved", admin_response: "Done." } }
+                params: { change_request: { status: ChangeRequest::STATUS_APPROVED, admin_response: "Done." } }
         }.to have_enqueued_job(ActionMailer::MailDeliveryJob)
       end
     end

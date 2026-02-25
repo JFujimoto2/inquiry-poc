@@ -8,11 +8,11 @@ module Admin
                                   .limit(RECENT_INQUIRIES_LIMIT)
       @stats = {
         total_inquiries: Inquiry.count,
-        quotes_sent: Quote.where(status: "sent").count,
-        quotes_pending: Quote.where(status: "pending").count,
-        quotes_failed: Quote.where(status: "failed").count,
-        reservations_pending: Reservation.where(status: "pending_confirmation").count,
-        reservations_confirmed: Reservation.where(status: "confirmed").count,
+        quotes_sent: Quote.where(status: Quote::STATUS_SENT).count,
+        quotes_pending: Quote.where(status: Quote::STATUS_PENDING).count,
+        quotes_failed: Quote.where(status: Quote::STATUS_FAILED).count,
+        reservations_pending: Reservation.where(status: Reservation::STATUS_PENDING_CONFIRMATION).count,
+        reservations_confirmed: Reservation.where(status: Reservation::STATUS_CONFIRMED).count,
         reservations_total: Reservation.count
       }
     end

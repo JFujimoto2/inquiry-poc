@@ -30,8 +30,8 @@ RSpec.describe "Admin::Reservations", type: :request do
 
       it "filters by status" do
         confirmed = create(:reservation, :confirmed)
-        pending = create(:reservation, status: "pending_confirmation")
-        get admin_reservations_path, params: { status: "confirmed" }
+        pending = create(:reservation, status: Reservation::STATUS_PENDING_CONFIRMATION)
+        get admin_reservations_path, params: { status: Reservation::STATUS_CONFIRMED }
         expect(response.body).to include(confirmed.facility.name)
         expect(response.body).not_to include(pending.customer.company_name)
       end
@@ -39,7 +39,7 @@ RSpec.describe "Admin::Reservations", type: :request do
 
     describe "GET /admin/reservations/:id" do
       it "renders the show page with transition buttons" do
-        reservation = create(:reservation, status: "pending_confirmation")
+        reservation = create(:reservation, status: Reservation::STATUS_PENDING_CONFIRMATION)
         get admin_reservation_path(reservation)
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("Confirmed")
@@ -70,17 +70,17 @@ RSpec.describe "Admin::Reservations", type: :request do
     end
 
     describe "PATCH /admin/reservations/:id/transition" do
-      let(:reservation) { create(:reservation, status: "pending_confirmation") }
+      let(:reservation) { create(:reservation, status: Reservation::STATUS_PENDING_CONFIRMATION) }
 
       it "transitions reservation status" do
-        patch transition_admin_reservation_path(reservation), params: { status: "confirmed" }
+        patch transition_admin_reservation_path(reservation), params: { status: Reservation::STATUS_CONFIRMED }
         expect(response).to redirect_to(admin_reservation_path(reservation))
-        expect(reservation.reload.status).to eq("confirmed")
+        expect(reservation.reload.status).to eq(Reservation::STATUS_CONFIRMED)
       end
 
       it "shows error for invalid transition" do
-        reservation.update!(status: "checked_out")
-        patch transition_admin_reservation_path(reservation), params: { status: "confirmed" }
+        reservation.update!(status: Reservation::STATUS_CHECKED_OUT)
+        patch transition_admin_reservation_path(reservation), params: { status: Reservation::STATUS_CONFIRMED }
         expect(response).to redirect_to(admin_reservation_path(reservation))
         expect(flash[:alert]).to be_present
       end

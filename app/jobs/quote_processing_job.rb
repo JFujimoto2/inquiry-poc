@@ -10,12 +10,12 @@ class QuoteProcessingJob < ApplicationJob
     inquiry.update!(total_amount: result.total)
 
     pdf_data = QuotePdfGenerator.new(quote).generate
-    quote.update!(pdf_data: pdf_data, status: "generated")
+    quote.update!(pdf_data: pdf_data, status: Quote::STATUS_GENERATED)
 
     QuoteMailer.send_quote(quote).deliver_now
-    quote.update!(status: "sent", sent_at: Time.current)
+    quote.update!(status: Quote::STATUS_SENT, sent_at: Time.current)
   rescue => e
-    quote&.update(status: "failed")
+    quote&.update(status: Quote::STATUS_FAILED)
     raise e
   end
 end

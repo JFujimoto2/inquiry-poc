@@ -29,7 +29,7 @@ class CreateReservationFromInquiry
       inquiry: @inquiry,
       customer:,
       facility: @inquiry.facility,
-      status: "pending_confirmation",
+      status: Reservation::STATUS_PENDING_CONFIRMATION,
       check_in_date: @inquiry.desired_date,
       num_people: @inquiry.num_people,
       total_amount: @inquiry.total_amount

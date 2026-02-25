@@ -15,7 +15,7 @@ RSpec.describe ChangeRequest, type: :model do
   end
 
   describe "scopes" do
-    let!(:pending_request) { create(:change_request, status: "pending") }
+    let!(:pending_request) { create(:change_request, status: ChangeRequest::STATUS_PENDING) }
     let!(:approved_request) { create(:change_request, :approved) }
 
     describe ".pending" do

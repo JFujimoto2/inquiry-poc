@@ -1,7 +1,7 @@
 <div class="bg-white shadow rounded p-6">
   <div class="flex justify-between items-start mb-4">
     <h1 class="text-2xl font-bold">Change Request #<%= @change_request.id %></h1>
-    <span class="px-3 py-1 rounded text-sm <%= @change_request.status == 'approved' ? 'bg-green-100 text-green-800' : @change_request.status == 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' %>">
+    <span class="px-3 py-1 rounded text-sm <%= change_request_status_class(@change_request.status) %>">
       <%= @change_request.status.titleize %>
     </span>
   </div>

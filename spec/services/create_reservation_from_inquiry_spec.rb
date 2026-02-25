@@ -50,7 +50,7 @@ RSpec.describe CreateReservationFromInquiry do
 
     it "creates a reservation with pending_confirmation status" do
       reservation = described_class.new(inquiry).call
-      expect(reservation.status).to eq("pending_confirmation")
+      expect(reservation.status).to eq(Reservation::STATUS_PENDING_CONFIRMATION)
     end
 
     it "maps inquiry attributes to reservation" do

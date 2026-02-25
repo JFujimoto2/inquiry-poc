@@ -22,7 +22,7 @@ RSpec.describe QuoteProcessingJob, type: :job do
       described_class.perform_now(quote.id)
 
       quote.reload
-      expect(quote.status).to eq("sent")
+      expect(quote.status).to eq(Quote::STATUS_SENT)
       expect(quote.pdf_data).to be_present
       expect(quote.pdf_data).to start_with("%PDF")
       expect(quote.sent_at).to be_present
@@ -53,7 +53,7 @@ RSpec.describe QuoteProcessingJob, type: :job do
         described_class.perform_now(quote.id)
       }.to raise_error(StandardError)
 
-      expect(quote.reload.status).to eq("failed")
+      expect(quote.reload.status).to eq(Quote::STATUS_FAILED)
     end
   end
 end

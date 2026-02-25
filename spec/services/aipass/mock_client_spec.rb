@@ -10,7 +10,7 @@ RSpec.describe Aipass::MockClient do
     it "returns a successful response" do
       response = client.sync_reservation(reservation)
       expect(response).to be_success
-      expect(response.data[:external_id]).to eq("mock-res-#{reservation.id}")
+      expect(response.data[:external_id]).to eq("#{described_class::MOCK_RESERVATION_PREFIX}-#{reservation.id}")
     end
   end
 
@@ -18,7 +18,7 @@ RSpec.describe Aipass::MockClient do
     it "returns a successful response" do
       response = client.sync_customer(customer)
       expect(response).to be_success
-      expect(response.data[:external_id]).to eq("mock-cust-#{customer.id}")
+      expect(response.data[:external_id]).to eq("#{described_class::MOCK_CUSTOMER_PREFIX}-#{customer.id}")
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Aipass::MockClient do
     it "returns cleaning status data" do
       response = client.fetch_cleaning_status(facility, Date.current)
       expect(response).to be_success
-      expect(response.data[:status]).to eq("clean")
+      expect(response.data[:status]).to eq(described_class::MOCK_CLEANING_STATUS)
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Aipass::MockClient do
       date_range = Date.current..Date.current + 7
       response = client.fetch_sales_data(facility, date_range)
       expect(response).to be_success
-      expect(response.data[:total_revenue]).to eq(500_000)
+      expect(response.data[:total_revenue]).to eq(described_class::MOCK_TOTAL_REVENUE)
     end
   end
 end

@@ -1,5 +1,13 @@
 class Reservation < ApplicationRecord
-  STATUSES = %w[pending_confirmation confirmed checked_in checked_out cancelled].freeze
+  STATUS_PENDING_CONFIRMATION = "pending_confirmation"
+  STATUS_CONFIRMED = "confirmed"
+  STATUS_CHECKED_IN = "checked_in"
+  STATUS_CHECKED_OUT = "checked_out"
+  STATUS_CANCELLED = "cancelled"
+  STATUSES = [
+    STATUS_PENDING_CONFIRMATION, STATUS_CONFIRMED, STATUS_CHECKED_IN,
+    STATUS_CHECKED_OUT, STATUS_CANCELLED
+  ].freeze
 
   belongs_to :inquiry
   belongs_to :customer
@@ -11,7 +19,7 @@ class Reservation < ApplicationRecord
   validates :num_people, presence: true, numericality: { greater_than: 0 }
   validate :check_out_after_check_in
 
-  scope :active, -> { where.not(status: "cancelled") }
+  scope :active, -> { where.not(status: STATUS_CANCELLED) }
   scope :upcoming, -> { active.where("check_in_date >= ?", Date.current) }
 
   private

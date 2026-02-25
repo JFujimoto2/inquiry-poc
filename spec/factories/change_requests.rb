@@ -3,15 +3,15 @@ FactoryBot.define do
     reservation
     customer
     request_details { "I would like to change the check-in date." }
-    status { "pending" }
+    status { ChangeRequest::STATUS_PENDING }
 
     trait :approved do
-      status { "approved" }
+      status { ChangeRequest::STATUS_APPROVED }
       admin_response { "Your request has been approved." }
     end
 
     trait :rejected do
-      status { "rejected" }
+      status { ChangeRequest::STATUS_REJECTED }
       admin_response { "Unfortunately, we cannot accommodate this change." }
     end
   end

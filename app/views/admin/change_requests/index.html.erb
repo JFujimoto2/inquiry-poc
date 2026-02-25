@@ -29,7 +29,7 @@
         <td class="p-3">#<%= cr.reservation.id %> - <%= cr.reservation.facility.name %></td>
         <td class="p-3"><%= truncate(cr.request_details, length: 50) %></td>
         <td class="p-3">
-          <span class="px-2 py-1 rounded text-sm <%= cr.status == 'approved' ? 'bg-green-100 text-green-800' : cr.status == 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' %>">
+          <span class="px-2 py-1 rounded text-sm <%= change_request_status_class(cr.status) %>">
             <%= cr.status.titleize %>
           </span>
         </td>

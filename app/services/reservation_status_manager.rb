@@ -2,11 +2,14 @@ class ReservationStatusManager
   class InvalidTransitionError < StandardError; end
 
   VALID_TRANSITIONS = {
-    "pending_confirmation" => %w[confirmed cancelled],
-    "confirmed" => %w[checked_in cancelled],
-    "checked_in" => %w[checked_out],
-    "checked_out" => [],
-    "cancelled" => []
+    Reservation::STATUS_PENDING_CONFIRMATION =>
+      [ Reservation::STATUS_CONFIRMED, Reservation::STATUS_CANCELLED ],
+    Reservation::STATUS_CONFIRMED =>
+      [ Reservation::STATUS_CHECKED_IN, Reservation::STATUS_CANCELLED ],
+    Reservation::STATUS_CHECKED_IN =>
+      [ Reservation::STATUS_CHECKED_OUT ],
+    Reservation::STATUS_CHECKED_OUT => [],
+    Reservation::STATUS_CANCELLED => []
   }.freeze
 
   def initialize(reservation)
@@ -37,15 +40,15 @@ class ReservationStatusManager
 
   def set_timestamps(new_status)
     case new_status
-    when "confirmed"
+    when Reservation::STATUS_CONFIRMED
       @reservation.update!(confirmed_at: Time.current)
-    when "cancelled"
+    when Reservation::STATUS_CANCELLED
       @reservation.update!(cancelled_at: Time.current)
     end
   end
 
   def enqueue_jobs(new_status)
-    if new_status == "confirmed"
+    if new_status == Reservation::STATUS_CONFIRMED
       ReservationConfirmationJob.perform_later(@reservation)
     end
   end
