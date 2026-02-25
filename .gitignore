@@ -1,5 +1,5 @@
-# System documents
-docs/システム刷新計画書.md
+# Internal documents (confidential)
+docs/internal/
 
 # Environment variables
 .env
