@@ -1,0 +1,50 @@
+<%= form_with(model: [:admin, reservation], class: "space-y-4") do |form| %>
+  <% if reservation.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <ul>
+        <% reservation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :facility_id, class: "block font-medium mb-1" %>
+    <%= form.collection_select :facility_id, Facility.order(:name), :id, :name, {}, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :customer_id, class: "block font-medium mb-1" %>
+    <%= form.collection_select :customer_id, Customer.order(:company_name), :id, :company_name, {}, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :check_in_date, class: "block font-medium mb-1" %>
+    <%= form.date_field :check_in_date, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :check_out_date, class: "block font-medium mb-1" %>
+    <%= form.date_field :check_out_date, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :num_people, class: "block font-medium mb-1" %>
+    <%= form.number_field :num_people, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :total_amount, class: "block font-medium mb-1" %>
+    <%= form.number_field :total_amount, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :admin_notes, class: "block font-medium mb-1" %>
+    <%= form.text_area :admin_notes, rows: 4, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+  </div>
+<% end %>

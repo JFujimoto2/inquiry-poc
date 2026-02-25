@@ -1,0 +1,10 @@
+Change Request Update
+
+Dear <%= @customer.contact_name %>,
+
+Your change request for reservation #<%= @reservation.id %> has been <%= @change_request.status %>.
+
+<% if @change_request.admin_response.present? %>
+Response:
+<%= @change_request.admin_response %>
+<% end %>

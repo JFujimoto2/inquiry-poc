@@ -61,7 +61,7 @@ module Admin
     end
 
     def email_template_params
-      params.require(:email_template).permit(:facility_id, :subject, :body)
+      params.require(:email_template).permit(:facility_id, :template_type, :subject, :body)
     end
 
     def interpolate(text, data)

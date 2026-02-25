@@ -1,0 +1,53 @@
+<div class="bg-white shadow rounded p-6">
+  <h1 class="text-2xl font-bold mb-4"><%= @customer.company_name %></h1>
+
+  <dl class="space-y-2">
+    <dt class="font-medium text-gray-600">Contact Name</dt>
+    <dd class="mb-3"><%= @customer.contact_name %></dd>
+
+    <dt class="font-medium text-gray-600">Email</dt>
+    <dd class="mb-3"><%= @customer.email %></dd>
+
+    <dt class="font-medium text-gray-600">Phone</dt>
+    <dd class="mb-3"><%= @customer.phone || "-" %></dd>
+
+    <dt class="font-medium text-gray-600">Notes</dt>
+    <dd class="mb-3 whitespace-pre-wrap"><%= @customer.notes || "-" %></dd>
+  </dl>
+
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Edit", edit_admin_customer_path(@customer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= button_to "Delete", admin_customer_path(@customer), method: :delete,
+        data: { turbo_confirm: "Are you sure?" },
+        class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
+    <%= link_to "Back", admin_customers_path, class: "text-blue-600 hover:underline self-center" %>
+  </div>
+</div>
+
+<% if @inquiries.any? %>
+  <div class="mt-8">
+    <h2 class="text-xl font-bold mb-4">Inquiries</h2>
+    <table class="w-full bg-white shadow rounded">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-left p-3">Date</th>
+          <th class="text-left p-3">Facility</th>
+          <th class="text-left p-3">Desired Date</th>
+          <th class="text-left p-3">People</th>
+          <th class="text-left p-3">Quote Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @inquiries.each do |inquiry| %>
+          <tr class="border-t">
+            <td class="p-3"><%= inquiry.created_at.strftime("%Y-%m-%d") %></td>
+            <td class="p-3"><%= inquiry.facility.name %></td>
+            <td class="p-3"><%= inquiry.desired_date %></td>
+            <td class="p-3"><%= inquiry.num_people %></td>
+            <td class="p-3"><%= inquiry.quote&.status || "-" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

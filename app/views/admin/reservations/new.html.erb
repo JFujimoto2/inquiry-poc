@@ -1,0 +1,15 @@
+<h1 class="text-2xl font-bold mb-6">New Reservation</h1>
+<% if @inquiry %>
+  <div class="bg-blue-50 border border-blue-200 rounded p-4 mb-6">
+    <p class="font-medium">Creating reservation from inquiry #<%= @inquiry.id %></p>
+    <p><%= @inquiry.company_name %> - <%= @inquiry.facility.name %> - <%= @inquiry.desired_date %></p>
+  </div>
+  <%= button_to "Create Reservation from Inquiry",
+      admin_reservations_path(inquiry_id: @inquiry.id),
+      class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+<% else %>
+  <%= render "form", reservation: @reservation %>
+<% end %>
+<div class="mt-4">
+  <%= link_to "Back", admin_reservations_path, class: "text-blue-600 hover:underline" %>
+</div>

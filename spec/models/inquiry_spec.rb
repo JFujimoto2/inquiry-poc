@@ -38,6 +38,8 @@ RSpec.describe Inquiry, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:facility) }
+    it { is_expected.to belong_to(:customer).optional }
     it { is_expected.to have_one(:quote).dependent(:destroy) }
+    it { is_expected.to have_one(:reservation).dependent(:destroy) }
   end
 end

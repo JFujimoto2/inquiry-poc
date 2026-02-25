@@ -1,0 +1,64 @@
+<div class="bg-white shadow rounded p-6">
+  <div class="flex justify-between items-start mb-4">
+    <h1 class="text-2xl font-bold">Reservation #<%= @reservation.id %></h1>
+    <span class="px-3 py-1 rounded text-sm <%= reservation_status_class(@reservation.status) %>">
+      <%= @reservation.status.titleize %>
+    </span>
+  </div>
+
+  <dl class="space-y-2">
+    <dt class="font-medium text-gray-600">Facility</dt>
+    <dd class="mb-3"><%= @reservation.facility.name %></dd>
+
+    <dt class="font-medium text-gray-600">Customer</dt>
+    <dd class="mb-3"><%= link_to @reservation.customer.company_name, admin_customer_path(@reservation.customer), class: "text-blue-600 hover:underline" %></dd>
+
+    <dt class="font-medium text-gray-600">Check-in Date</dt>
+    <dd class="mb-3"><%= @reservation.check_in_date %></dd>
+
+    <dt class="font-medium text-gray-600">Check-out Date</dt>
+    <dd class="mb-3"><%= @reservation.check_out_date || "-" %></dd>
+
+    <dt class="font-medium text-gray-600">Number of People</dt>
+    <dd class="mb-3"><%= @reservation.num_people %></dd>
+
+    <dt class="font-medium text-gray-600">Total Amount</dt>
+    <dd class="mb-3"><%= @reservation.total_amount ? number_to_currency(@reservation.total_amount, unit: "¥", precision: 0) : "-" %></dd>
+
+    <dt class="font-medium text-gray-600">Admin Notes</dt>
+    <dd class="mb-3 whitespace-pre-wrap"><%= @reservation.admin_notes || "-" %></dd>
+
+    <% if @reservation.confirmed_at %>
+      <dt class="font-medium text-gray-600">Confirmed At</dt>
+      <dd class="mb-3"><%= @reservation.confirmed_at.strftime("%Y-%m-%d %H:%M") %></dd>
+    <% end %>
+
+    <% if @reservation.cancelled_at %>
+      <dt class="font-medium text-gray-600">Cancelled At</dt>
+      <dd class="mb-3"><%= @reservation.cancelled_at.strftime("%Y-%m-%d %H:%M") %></dd>
+    <% end %>
+  </dl>
+
+  <% if @status_manager.allowed_transitions.any? %>
+    <div class="mt-6 border-t pt-4">
+      <h3 class="font-medium mb-2">Status Transitions</h3>
+      <div class="flex gap-2">
+        <% @status_manager.allowed_transitions.each do |status| %>
+          <%= button_to status.titleize,
+              transition_admin_reservation_path(@reservation, status:),
+              method: :patch,
+              data: { turbo_confirm: "Change status to #{status.titleize}?" },
+              class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Edit", edit_admin_reservation_path(@reservation), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= button_to "Delete", admin_reservation_path(@reservation), method: :delete,
+        data: { turbo_confirm: "Are you sure?" },
+        class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
+    <%= link_to "Back", admin_reservations_path, class: "text-blue-600 hover:underline self-center" %>
+  </div>
+</div>

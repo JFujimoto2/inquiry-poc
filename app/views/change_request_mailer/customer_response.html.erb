@@ -1,0 +1,9 @@
+<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2>Change Request Update</h2>
+  <p>Dear <%= @customer.contact_name %>,</p>
+  <p>Your change request for reservation #<%= @reservation.id %> has been <strong><%= @change_request.status %></strong>.</p>
+  <% if @change_request.admin_response.present? %>
+    <p><strong>Response:</strong></p>
+    <p><%= simple_format(@change_request.admin_response) %></p>
+  <% end %>
+</div>

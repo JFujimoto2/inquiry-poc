@@ -10,7 +10,10 @@ module Admin
         total_inquiries: Inquiry.count,
         quotes_sent: Quote.where(status: "sent").count,
         quotes_pending: Quote.where(status: "pending").count,
-        quotes_failed: Quote.where(status: "failed").count
+        quotes_failed: Quote.where(status: "failed").count,
+        reservations_pending: Reservation.where(status: "pending_confirmation").count,
+        reservations_confirmed: Reservation.where(status: "confirmed").count,
+        reservations_total: Reservation.count
       }
     end
   end

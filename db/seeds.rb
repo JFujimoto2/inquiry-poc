@@ -56,7 +56,7 @@ puts "Price masters: #{PriceMaster.count} entries"
 
 # Email templates
 facilities.each do |facility|
-  EmailTemplate.find_or_create_by!(facility: facility) do |et|
+  EmailTemplate.find_or_create_by!(facility: facility, template_type: "quote") do |et|
     et.subject = "Quote for {{company_name}} - {{facility_name}}"
     et.body = <<~BODY
       Dear {{contact_name}},
@@ -67,6 +67,24 @@ facilities.each do |facility|
       Total: ¥{{total_amount}}
 
       If you have any questions, please don't hesitate to contact us.
+
+      Best regards,
+      #{facility.name} Staff
+    BODY
+  end
+
+  EmailTemplate.find_or_create_by!(facility: facility, template_type: "reservation_confirmation") do |et|
+    et.subject = "Reservation Confirmed - {{facility_name}}"
+    et.body = <<~BODY
+      Dear {{contact_name}},
+
+      Your reservation at {{facility_name}} has been confirmed.
+
+      Check-in: {{check_in_date}}
+      Number of guests: {{num_people}}
+      Total: ¥{{total_amount}}
+
+      We look forward to welcoming you.
 
       Best regards,
       #{facility.name} Staff

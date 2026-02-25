@@ -1,0 +1,41 @@
+module Mypage
+  class CustomerSessionsController < ApplicationController
+    skip_before_action :require_authentication
+    layout "mypage"
+
+    def new; end
+
+    def create
+      customer = Customer.find_by(email: params[:email])
+      if customer
+        CustomerMagicLinkSender.new(customer).call
+      end
+      redirect_to new_mypage_session_path, notice: "If your email is registered, you will receive a login link shortly."
+    end
+
+    def verify
+      token_digest = Digest::SHA256.hexdigest(params[:token])
+      customer_session = CustomerSession.valid.find_by(token_digest:)
+
+      if customer_session
+        start_customer_session(customer_session)
+        redirect_to mypage_root_path, notice: "Successfully logged in."
+      else
+        redirect_to new_mypage_session_path, alert: "Invalid or expired link. Please request a new one."
+      end
+    end
+
+    def destroy
+      terminate_customer_session
+      redirect_to new_mypage_session_path, notice: "Logged out successfully.", status: :see_other
+    end
+
+    private
+
+    include CustomerAuthentication
+
+    def require_customer_authentication
+      # Skip for session actions
+    end
+  end
+end

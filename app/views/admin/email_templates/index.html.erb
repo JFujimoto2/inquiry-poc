@@ -7,6 +7,7 @@
   <thead class="bg-gray-100">
     <tr>
       <th class="text-left p-3">Facility</th>
+      <th class="text-left p-3">Type</th>
       <th class="text-left p-3">Subject</th>
       <th class="text-left p-3">Actions</th>
     </tr>
@@ -15,6 +16,7 @@
     <% @email_templates.each do |et| %>
       <tr class="border-t">
         <td class="p-3"><%= et.facility.name %></td>
+        <td class="p-3"><%= et.template_type.titleize %></td>
         <td class="p-3"><%= et.subject %></td>
         <td class="p-3">
           <%= link_to "Show", admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>

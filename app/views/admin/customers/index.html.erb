@@ -1,0 +1,37 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Customers</h1>
+  <%= link_to "New Customer", new_admin_customer_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+</div>
+
+<%= form_with url: admin_customers_path, method: :get, class: "mb-6 flex gap-2" do |form| %>
+  <%= form.text_field :q, value: params[:q], placeholder: "Search by company, name, or email...", class: "border rounded p-2 flex-1" %>
+  <%= form.submit "Search", class: "bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer" %>
+<% end %>
+
+<table class="w-full bg-white shadow rounded">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="text-left p-3">Company</th>
+      <th class="text-left p-3">Contact</th>
+      <th class="text-left p-3">Email</th>
+      <th class="text-left p-3">Phone</th>
+      <th class="text-left p-3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr class="border-t">
+        <td class="p-3"><%= link_to customer.company_name, admin_customer_path(customer), class: "text-blue-600 hover:underline" %></td>
+        <td class="p-3"><%= customer.contact_name %></td>
+        <td class="p-3"><%= customer.email %></td>
+        <td class="p-3"><%= customer.phone %></td>
+        <td class="p-3">
+          <%= link_to "Edit", edit_admin_customer_path(customer), class: "text-blue-600 hover:underline mr-2" %>
+          <%= button_to "Delete", admin_customer_path(customer), method: :delete,
+              data: { turbo_confirm: "Are you sure?" },
+              class: "text-red-600 hover:underline bg-transparent border-0 cursor-pointer" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
