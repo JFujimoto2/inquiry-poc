@@ -11,7 +11,7 @@ RSpec.describe "Mypage::ChangeRequests", type: :request do
     it "renders the new form" do
       get new_mypage_reservation_change_request_path(reservation)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Request Change")
+      expect(response.body).to include("変更リクエスト")
     end
 
     it "cannot access another customer's reservation" do

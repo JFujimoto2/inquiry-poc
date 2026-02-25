@@ -21,7 +21,7 @@ module CustomerAuthentication
 
   def require_customer_authentication
     unless current_customer
-      redirect_to new_mypage_session_path, alert: "Please log in to continue."
+      redirect_to new_mypage_session_path, alert: "ログインしてください。"
     end
   end
 

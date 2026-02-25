@@ -10,22 +10,22 @@
   <% end %>
 
   <div>
-    <%= form.label :facility_id, class: "block font-medium mb-1" %>
+    <%= form.label :facility_id, "施設", class: "block font-medium mb-1" %>
     <%= form.collection_select :facility_id, Facility.order(:name), :id, :name, {}, class: "border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :item_type, class: "block font-medium mb-1" %>
+    <%= form.label :item_type, "項目種別", class: "block font-medium mb-1" %>
     <%= form.select :item_type, PriceMaster::ITEM_TYPES.map { |t| [t.titleize, t] }, {}, class: "border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :day_type, class: "block font-medium mb-1" %>
+    <%= form.label :day_type, "日種別", class: "block font-medium mb-1" %>
     <%= form.select :day_type, PriceMaster::DAY_TYPES.map { |t| [t.titleize, t] }, {}, class: "border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :unit_price, class: "block font-medium mb-1" %>
+    <%= form.label :unit_price, "単価", class: "block font-medium mb-1" %>
     <%= form.number_field :unit_price, min: 0, class: "border rounded p-2" %>
   </div>
 

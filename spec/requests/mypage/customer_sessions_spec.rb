@@ -5,7 +5,7 @@ RSpec.describe "Mypage::CustomerSessions", type: :request do
     it "renders the login form" do
       get new_mypage_session_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Mypage Login")
+      expect(response.body).to include("マイページログイン")
     end
   end
 
@@ -15,13 +15,13 @@ RSpec.describe "Mypage::CustomerSessions", type: :request do
     it "redirects with notice for existing customer" do
       post mypage_session_path, params: { email: "test@example.com" }
       expect(response).to redirect_to(new_mypage_session_path)
-      expect(flash[:notice]).to include("login link")
+      expect(flash[:notice]).to include("ログインリンク")
     end
 
     it "redirects with same notice for non-existing email" do
       post mypage_session_path, params: { email: "unknown@example.com" }
       expect(response).to redirect_to(new_mypage_session_path)
-      expect(flash[:notice]).to include("login link")
+      expect(flash[:notice]).to include("ログインリンク")
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe "Mypage::CustomerSessions", type: :request do
         )
         get verify_mypage_session_path(token:)
         expect(response).to redirect_to(new_mypage_session_path)
-        expect(flash[:alert]).to include("expired")
+        expect(flash[:alert]).to include("期限切れ")
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe "Mypage::CustomerSessions", type: :request do
       it "redirects to login with error" do
         get verify_mypage_session_path(token: "invalid_token")
         expect(response).to redirect_to(new_mypage_session_path)
-        expect(flash[:alert]).to include("expired")
+        expect(flash[:alert]).to include("期限切れ")
       end
     end
   end

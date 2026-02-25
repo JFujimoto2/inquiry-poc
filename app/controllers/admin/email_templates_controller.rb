@@ -20,7 +20,7 @@ module Admin
     def create
       @email_template = EmailTemplate.new(email_template_params)
       if @email_template.save
-        redirect_to admin_email_template_path(@email_template), notice: "Email template was successfully created."
+        redirect_to admin_email_template_path(@email_template), notice: "メールテンプレートを作成しました。"
       else
         render :new, status: :unprocessable_entity
       end
@@ -30,7 +30,7 @@ module Admin
 
     def update
       if @email_template.update(email_template_params)
-        redirect_to admin_email_template_path(@email_template), notice: "Email template was successfully updated."
+        redirect_to admin_email_template_path(@email_template), notice: "メールテンプレートを更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -38,14 +38,14 @@ module Admin
 
     def destroy
       @email_template.destroy!
-      redirect_to admin_email_templates_path, notice: "Email template was successfully deleted.", status: :see_other
+      redirect_to admin_email_templates_path, notice: "メールテンプレートを削除しました。", status: :see_other
     end
 
     def preview
       sample_data = {
         "facility_name" => @email_template.facility.name,
-        "company_name" => "Sample Company",
-        "contact_name" => "Sample Contact",
+        "company_name" => "サンプル株式会社",
+        "contact_name" => "サンプル担当者",
         "desired_date" => Date.current.to_s,
         "num_people" => "10",
         "total_amount" => "150,000"

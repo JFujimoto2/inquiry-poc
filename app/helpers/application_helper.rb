@@ -7,9 +7,13 @@ module ApplicationHelper
     Reservation::STATUS_CANCELLED => "bg-red-100 text-red-800"
   }.freeze
 
-  def reservation_status_class(status)
-    RESERVATION_STATUS_CLASSES.fetch(status, "bg-gray-100 text-gray-800")
-  end
+  RESERVATION_STATUS_LABELS = {
+    "pending_confirmation" => "確認待ち",
+    "confirmed" => "確定",
+    "checked_in" => "チェックイン済",
+    "checked_out" => "チェックアウト済",
+    "cancelled" => "キャンセル済"
+  }.freeze
 
   CHANGE_REQUEST_STATUS_CLASSES = {
     ChangeRequest::STATUS_PENDING => "bg-yellow-100 text-yellow-800",
@@ -17,7 +21,36 @@ module ApplicationHelper
     ChangeRequest::STATUS_REJECTED => "bg-red-100 text-red-800"
   }.freeze
 
+  CHANGE_REQUEST_STATUS_LABELS = {
+    "pending" => "対応待ち",
+    "approved" => "承認済",
+    "rejected" => "却下"
+  }.freeze
+
+  QUOTE_STATUS_LABELS = {
+    "pending" => "処理中",
+    "generated" => "生成済",
+    "sent" => "送信済",
+    "failed" => "失敗"
+  }.freeze
+
+  def reservation_status_class(status)
+    RESERVATION_STATUS_CLASSES.fetch(status, "bg-gray-100 text-gray-800")
+  end
+
+  def reservation_status_label(status)
+    RESERVATION_STATUS_LABELS.fetch(status, status)
+  end
+
   def change_request_status_class(status)
     CHANGE_REQUEST_STATUS_CLASSES.fetch(status, "bg-gray-100 text-gray-800")
+  end
+
+  def change_request_status_label(status)
+    CHANGE_REQUEST_STATUS_LABELS.fetch(status, status)
+  end
+
+  def quote_status_label(status)
+    QUOTE_STATUS_LABELS.fetch(status, status)
   end
 end

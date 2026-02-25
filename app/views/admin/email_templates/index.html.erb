@@ -1,15 +1,15 @@
 <div class="flex justify-between items-center mb-6">
-  <h1 class="text-2xl font-bold">Email Templates</h1>
-  <%= link_to "New Template", new_admin_email_template_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  <h1 class="text-2xl font-bold">メールテンプレート</h1>
+  <%= link_to "新規テンプレート", new_admin_email_template_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
 </div>
 
 <table class="w-full bg-white shadow rounded">
   <thead class="bg-gray-100">
     <tr>
-      <th class="text-left p-3">Facility</th>
-      <th class="text-left p-3">Type</th>
-      <th class="text-left p-3">Subject</th>
-      <th class="text-left p-3">Actions</th>
+      <th class="text-left p-3">施設</th>
+      <th class="text-left p-3">種別</th>
+      <th class="text-left p-3">件名</th>
+      <th class="text-left p-3">操作</th>
     </tr>
   </thead>
   <tbody>
@@ -19,11 +19,11 @@
         <td class="p-3"><%= et.template_type.titleize %></td>
         <td class="p-3"><%= et.subject %></td>
         <td class="p-3">
-          <%= link_to "Show", admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>
-          <%= link_to "Preview", preview_admin_email_template_path(et), class: "text-green-600 hover:underline mr-2" %>
-          <%= link_to "Edit", edit_admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>
-          <%= button_to "Delete", admin_email_template_path(et), method: :delete,
-              data: { turbo_confirm: "Are you sure?" },
+          <%= link_to "詳細", admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>
+          <%= link_to "プレビュー", preview_admin_email_template_path(et), class: "text-green-600 hover:underline mr-2" %>
+          <%= link_to "編集", edit_admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>
+          <%= button_to "削除", admin_email_template_path(et), method: :delete,
+              data: { turbo_confirm: "本当によろしいですか？" },
               class: "text-red-600 hover:underline bg-transparent border-0 cursor-pointer" %>
         </td>
       </tr>

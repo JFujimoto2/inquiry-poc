@@ -9,7 +9,7 @@ class ChangeRequestMailer < ApplicationMailer
 
     mail(
       to: admin_emails,
-      subject: "Change Request ##{change_request.id} - #{@customer.company_name}"
+      subject: "変更リクエスト ##{change_request.id} - #{@customer.company_name}"
     )
   end
 
@@ -18,9 +18,10 @@ class ChangeRequestMailer < ApplicationMailer
     @reservation = change_request.reservation
     @customer = change_request.customer
 
+    status_label = ApplicationController.helpers.change_request_status_label(@change_request.status)
     mail(
       to: @customer.email,
-      subject: "Change Request Update - #{@change_request.status.titleize}"
+      subject: "変更リクエスト更新 - #{status_label}"
     )
   end
 end

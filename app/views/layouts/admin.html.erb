@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Admin - Inquiry System" %></title>
+    <title><%= content_for(:title) || "管理画面 - 問い合わせシステム" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,18 +13,18 @@
     <nav class="bg-gray-800 text-white p-4">
       <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center space-x-6">
-          <span class="font-bold text-lg">Admin</span>
-          <%= link_to "Dashboard", admin_root_path, class: "hover:text-gray-300" %>
-          <%= link_to "Inquiries", admin_inquiries_path, class: "hover:text-gray-300" %>
-          <%= link_to "Reservations", admin_reservations_path, class: "hover:text-gray-300" %>
-          <%= link_to "Customers", admin_customers_path, class: "hover:text-gray-300" %>
-          <%= link_to "Facilities", admin_facilities_path, class: "hover:text-gray-300" %>
-          <%= link_to "Calendar", admin_calendar_types_path, class: "hover:text-gray-300" %>
-          <%= link_to "Prices", admin_price_masters_path, class: "hover:text-gray-300" %>
-          <%= link_to "Email Templates", admin_email_templates_path, class: "hover:text-gray-300" %>
+          <span class="font-bold text-lg">管理画面</span>
+          <%= link_to "ダッシュボード", admin_root_path, class: "hover:text-gray-300" %>
+          <%= link_to "問い合わせ", admin_inquiries_path, class: "hover:text-gray-300" %>
+          <%= link_to "予約", admin_reservations_path, class: "hover:text-gray-300" %>
+          <%= link_to "顧客", admin_customers_path, class: "hover:text-gray-300" %>
+          <%= link_to "施設", admin_facilities_path, class: "hover:text-gray-300" %>
+          <%= link_to "カレンダー", admin_calendar_types_path, class: "hover:text-gray-300" %>
+          <%= link_to "料金", admin_price_masters_path, class: "hover:text-gray-300" %>
+          <%= link_to "メールテンプレート", admin_email_templates_path, class: "hover:text-gray-300" %>
         </div>
         <div>
-          <%= button_to "Logout", session_path, method: :delete, class: "hover:text-gray-300 bg-transparent border-0 cursor-pointer text-white" %>
+          <%= button_to "ログアウト", session_path, method: :delete, class: "hover:text-gray-300 bg-transparent border-0 cursor-pointer text-white" %>
         </div>
       </div>
     </nav>

@@ -22,7 +22,7 @@ class InquiriesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   rescue QuoteCalculator::PriceNotFoundError => e
-    @inquiry.errors.add(:base, "Price configuration is incomplete. Please contact us.")
+    @inquiry.errors.add(:base, "料金設定が不完全です。お手数ですがお問い合わせください。")
     @facilities = Facility.order(:name)
     render :new, status: :unprocessable_entity
   end

@@ -2,39 +2,39 @@
   <h1 class="text-2xl font-bold mb-4"><%= @customer.company_name %></h1>
 
   <dl class="space-y-2">
-    <dt class="font-medium text-gray-600">Contact Name</dt>
+    <dt class="font-medium text-gray-600">担当者名</dt>
     <dd class="mb-3"><%= @customer.contact_name %></dd>
 
-    <dt class="font-medium text-gray-600">Email</dt>
+    <dt class="font-medium text-gray-600">メールアドレス</dt>
     <dd class="mb-3"><%= @customer.email %></dd>
 
-    <dt class="font-medium text-gray-600">Phone</dt>
+    <dt class="font-medium text-gray-600">電話番号</dt>
     <dd class="mb-3"><%= @customer.phone || "-" %></dd>
 
-    <dt class="font-medium text-gray-600">Notes</dt>
+    <dt class="font-medium text-gray-600">備考</dt>
     <dd class="mb-3 whitespace-pre-wrap"><%= @customer.notes || "-" %></dd>
   </dl>
 
   <div class="mt-6 flex space-x-4">
-    <%= link_to "Edit", edit_admin_customer_path(@customer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-    <%= button_to "Delete", admin_customer_path(@customer), method: :delete,
-        data: { turbo_confirm: "Are you sure?" },
+    <%= link_to "編集", edit_admin_customer_path(@customer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= button_to "削除", admin_customer_path(@customer), method: :delete,
+        data: { turbo_confirm: "本当によろしいですか？" },
         class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
-    <%= link_to "Back", admin_customers_path, class: "text-blue-600 hover:underline self-center" %>
+    <%= link_to "戻る", admin_customers_path, class: "text-blue-600 hover:underline self-center" %>
   </div>
 </div>
 
 <% if @inquiries.any? %>
   <div class="mt-8">
-    <h2 class="text-xl font-bold mb-4">Inquiries</h2>
+    <h2 class="text-xl font-bold mb-4">問い合わせ履歴</h2>
     <table class="w-full bg-white shadow rounded">
       <thead class="bg-gray-100">
         <tr>
-          <th class="text-left p-3">Date</th>
-          <th class="text-left p-3">Facility</th>
-          <th class="text-left p-3">Desired Date</th>
-          <th class="text-left p-3">People</th>
-          <th class="text-left p-3">Quote Status</th>
+          <th class="text-left p-3">日時</th>
+          <th class="text-left p-3">施設</th>
+          <th class="text-left p-3">希望日</th>
+          <th class="text-left p-3">人数</th>
+          <th class="text-left p-3">見積ステータス</th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +44,7 @@
             <td class="p-3"><%= inquiry.facility.name %></td>
             <td class="p-3"><%= inquiry.desired_date %></td>
             <td class="p-3"><%= inquiry.num_people %></td>
-            <td class="p-3"><%= inquiry.quote&.status || "-" %></td>
+            <td class="p-3"><%= inquiry.quote ? quote_status_label(inquiry.quote.status) : "-" %></td>
           </tr>
         <% end %>
       </tbody>

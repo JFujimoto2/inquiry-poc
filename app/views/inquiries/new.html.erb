@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto">
-  <h1 class="text-2xl font-bold mb-6">Inquiry Form</h1>
+  <h1 class="text-2xl font-bold mb-6">お問い合わせフォーム</h1>
 
   <%= form_with(model: @inquiry, class: "space-y-4", data: { controller: "inquiry-form" }) do |form| %>
     <% if @inquiry.errors.any? %>
@@ -13,68 +13,68 @@
     <% end %>
 
     <div>
-      <%= form.label :facility_id, "Facility", class: "block font-medium mb-1" %>
+      <%= form.label :facility_id, "施設", class: "block font-medium mb-1" %>
       <%= form.collection_select :facility_id, @facilities, :id, :name,
-          { prompt: "Select a facility" }, class: "w-full border rounded p-2" %>
+          { prompt: "施設を選択してください" }, class: "w-full border rounded p-2" %>
     </div>
 
     <div>
-      <%= form.label :desired_date, class: "block font-medium mb-1" %>
+      <%= form.label :desired_date, "利用希望日", class: "block font-medium mb-1" %>
       <%= form.date_field :desired_date, class: "border rounded p-2" %>
     </div>
 
     <div>
-      <%= form.label :num_people, "Number of People", class: "block font-medium mb-1" %>
+      <%= form.label :num_people, "利用人数", class: "block font-medium mb-1" %>
       <%= form.number_field :num_people, min: 1, class: "border rounded p-2" %>
     </div>
 
     <fieldset class="space-y-2">
-      <legend class="font-medium">Services</legend>
+      <legend class="font-medium">サービス</legend>
 
       <div>
         <%= form.check_box :conference_room, class: "mr-2" %>
-        <%= form.label :conference_room, "Conference Room" %>
+        <%= form.label :conference_room, "会議室" %>
       </div>
 
       <div>
         <%= form.check_box :accommodation, class: "mr-2",
             data: { action: "change->inquiry-form#toggleBreakfast", inquiry_form_target: "accommodation" } %>
-        <%= form.label :accommodation, "Accommodation" %>
+        <%= form.label :accommodation, "宿泊" %>
       </div>
 
       <div data-inquiry-form-target="breakfastWrapper" class="<%= 'hidden' unless @inquiry.accommodation? %>">
         <%= form.check_box :breakfast, class: "mr-2" %>
-        <%= form.label :breakfast, "Breakfast" %>
+        <%= form.label :breakfast, "朝食" %>
       </div>
 
       <div>
         <%= form.check_box :lunch, class: "mr-2" %>
-        <%= form.label :lunch, "Lunch" %>
+        <%= form.label :lunch, "昼食" %>
       </div>
 
       <div>
         <%= form.check_box :dinner, class: "mr-2" %>
-        <%= form.label :dinner, "Dinner" %>
+        <%= form.label :dinner, "夕食" %>
       </div>
     </fieldset>
 
     <div>
-      <%= form.label :company_name, class: "block font-medium mb-1" %>
+      <%= form.label :company_name, "会社名", class: "block font-medium mb-1" %>
       <%= form.text_field :company_name, class: "w-full border rounded p-2" %>
     </div>
 
     <div>
-      <%= form.label :contact_name, class: "block font-medium mb-1" %>
+      <%= form.label :contact_name, "担当者名", class: "block font-medium mb-1" %>
       <%= form.text_field :contact_name, class: "w-full border rounded p-2" %>
     </div>
 
     <div>
-      <%= form.label :email, class: "block font-medium mb-1" %>
+      <%= form.label :email, "メールアドレス", class: "block font-medium mb-1" %>
       <%= form.email_field :email, class: "w-full border rounded p-2" %>
     </div>
 
     <div>
-      <%= form.submit "Submit Inquiry",
+      <%= form.submit "問い合わせを送信",
           class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
     </div>
   <% end %>

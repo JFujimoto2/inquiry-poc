@@ -15,7 +15,7 @@ module Admin
     def create
       @facility = Facility.new(facility_params)
       if @facility.save
-        redirect_to admin_facility_path(@facility), notice: "Facility was successfully created."
+        redirect_to admin_facility_path(@facility), notice: "施設を作成しました。"
       else
         render :new, status: :unprocessable_entity
       end
@@ -25,7 +25,7 @@ module Admin
 
     def update
       if @facility.update(facility_params)
-        redirect_to admin_facility_path(@facility), notice: "Facility was successfully updated."
+        redirect_to admin_facility_path(@facility), notice: "施設を更新しました。"
       else
         render :edit, status: :unprocessable_entity
       end
@@ -33,7 +33,7 @@ module Admin
 
     def destroy
       @facility.destroy!
-      redirect_to admin_facilities_path, notice: "Facility was successfully deleted.", status: :see_other
+      redirect_to admin_facilities_path, notice: "施設を削除しました。", status: :see_other
     end
 
     private

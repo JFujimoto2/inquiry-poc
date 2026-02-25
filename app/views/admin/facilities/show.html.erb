@@ -2,21 +2,21 @@
   <h1 class="text-2xl font-bold mb-4"><%= @facility.name %></h1>
 
   <dl class="space-y-2">
-    <dt class="font-medium text-gray-600">Sender Email</dt>
+    <dt class="font-medium text-gray-600">送信元メール</dt>
     <dd class="mb-3"><%= @facility.sender_email %></dd>
 
-    <dt class="font-medium text-gray-600">Sender Domain</dt>
+    <dt class="font-medium text-gray-600">送信元ドメイン</dt>
     <dd class="mb-3"><%= @facility.sender_domain %></dd>
 
-    <dt class="font-medium text-gray-600">Email Signature</dt>
+    <dt class="font-medium text-gray-600">メール署名</dt>
     <dd class="mb-3 whitespace-pre-wrap"><%= @facility.email_signature %></dd>
   </dl>
 
   <div class="mt-6 flex space-x-4">
-    <%= link_to "Edit", edit_admin_facility_path(@facility), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
-    <%= button_to "Delete", admin_facility_path(@facility), method: :delete,
-        data: { turbo_confirm: "Are you sure?" },
+    <%= link_to "編集", edit_admin_facility_path(@facility), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= button_to "削除", admin_facility_path(@facility), method: :delete,
+        data: { turbo_confirm: "本当によろしいですか？" },
         class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
-    <%= link_to "Back", admin_facilities_path, class: "text-blue-600 hover:underline self-center" %>
+    <%= link_to "戻る", admin_facilities_path, class: "text-blue-600 hover:underline self-center" %>
   </div>
 </div>

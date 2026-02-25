@@ -28,7 +28,7 @@ class Reservation < ApplicationRecord
     return if check_in_date.blank? || check_out_date.blank?
 
     if check_out_date <= check_in_date
-      errors.add(:check_out_date, "must be after check-in date")
+      errors.add(:check_out_date, "はチェックイン日より後の日付にしてください")
     end
   end
 end

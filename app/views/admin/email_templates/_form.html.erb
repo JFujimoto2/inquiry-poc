@@ -10,22 +10,22 @@
   <% end %>
 
   <div>
-    <%= form.label :facility_id, class: "block font-medium mb-1" %>
+    <%= form.label :facility_id, "施設", class: "block font-medium mb-1" %>
     <%= form.collection_select :facility_id, Facility.order(:name), :id, :name, {}, class: "border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :subject, class: "block font-medium mb-1" %>
+    <%= form.label :subject, "件名", class: "block font-medium mb-1" %>
     <%= form.text_field :subject, class: "w-full border rounded p-2" %>
   </div>
 
   <div>
-    <%= form.label :body, class: "block font-medium mb-1" %>
+    <%= form.label :body, "本文", class: "block font-medium mb-1" %>
     <%= form.text_area :body, rows: 10, class: "w-full border rounded p-2" %>
   </div>
 
   <div class="bg-gray-100 p-3 rounded text-sm">
-    <p class="font-medium mb-1">Available variables:</p>
+    <p class="font-medium mb-1">利用可能な変数:</p>
     <code><%= Admin::EmailTemplatesController::TEMPLATE_VARIABLES.map { |v| "{{#{v}}}" }.join(", ") %></code>
   </div>
 

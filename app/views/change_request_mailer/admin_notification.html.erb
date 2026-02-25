@@ -1,8 +1,8 @@
 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-  <h2>New Change Request</h2>
-  <p>A change request has been submitted.</p>
-  <p><strong>Customer:</strong> <%= @customer.company_name %> (<%= @customer.contact_name %>)</p>
-  <p><strong>Reservation:</strong> #<%= @reservation.id %> - <%= @reservation.facility.name %></p>
-  <p><strong>Details:</strong></p>
+  <h2>新しい変更リクエスト</h2>
+  <p>変更リクエストが送信されました。</p>
+  <p><strong>顧客:</strong> <%= @customer.company_name %> (<%= @customer.contact_name %>)</p>
+  <p><strong>予約:</strong> #<%= @reservation.id %> - <%= @reservation.facility.name %></p>
+  <p><strong>変更内容:</strong></p>
   <p><%= simple_format(@change_request.request_details) %></p>
 </div>
