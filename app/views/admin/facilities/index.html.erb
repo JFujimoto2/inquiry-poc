@@ -1,0 +1,30 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Facilities</h1>
+  <%= link_to "New Facility", new_admin_facility_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+</div>
+
+<table class="w-full bg-white shadow rounded">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="text-left p-3">Name</th>
+      <th class="text-left p-3">Sender Email</th>
+      <th class="text-left p-3">Sender Domain</th>
+      <th class="text-left p-3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @facilities.each do |facility| %>
+      <tr class="border-t">
+        <td class="p-3"><%= link_to facility.name, admin_facility_path(facility), class: "text-blue-600 hover:underline" %></td>
+        <td class="p-3"><%= facility.sender_email %></td>
+        <td class="p-3"><%= facility.sender_domain %></td>
+        <td class="p-3">
+          <%= link_to "Edit", edit_admin_facility_path(facility), class: "text-blue-600 hover:underline mr-2" %>
+          <%= button_to "Delete", admin_facility_path(facility), method: :delete,
+              data: { turbo_confirm: "Are you sure?" },
+              class: "text-red-600 hover:underline bg-transparent border-0 cursor-pointer" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

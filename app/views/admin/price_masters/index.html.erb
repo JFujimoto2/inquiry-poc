@@ -1,0 +1,44 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Price Masters</h1>
+  <%= link_to "New Price", new_admin_price_master_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+</div>
+
+<% @facilities.each do |facility| %>
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-3"><%= facility.name %></h2>
+    <table class="w-full bg-white shadow rounded">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-left p-3">Item Type</th>
+          <% CalendarType::DAY_TYPES.each do |day_type| %>
+            <th class="text-left p-3"><%= day_type.titleize %></th>
+          <% end %>
+          <th class="text-left p-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% PriceMaster::ITEM_TYPES.each do |item_type| %>
+          <tr class="border-t">
+            <td class="p-3 font-medium"><%= item_type.titleize %></td>
+            <% CalendarType::DAY_TYPES.each do |day_type| %>
+              <% pm = facility.price_masters.find { |p| p.item_type == item_type && p.day_type == day_type } %>
+              <td class="p-3">
+                <% if pm %>
+                  <%= number_to_currency(pm.unit_price, unit: "¥", precision: 0) %>
+                <% else %>
+                  <span class="text-gray-400">-</span>
+                <% end %>
+              </td>
+            <% end %>
+            <td class="p-3">
+              <% pm = facility.price_masters.find { |p| p.item_type == item_type } %>
+              <% if pm %>
+                <%= link_to "Edit", edit_admin_price_master_path(pm), class: "text-blue-600 hover:underline" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

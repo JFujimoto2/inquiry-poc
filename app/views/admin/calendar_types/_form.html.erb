@@ -1,0 +1,25 @@
+<%= form_with(model: [:admin, calendar_type], class: "space-y-4") do |form| %>
+  <% if calendar_type.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <ul>
+        <% calendar_type.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :date, class: "block font-medium mb-1" %>
+    <%= form.date_field :date, class: "border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.label :day_type, class: "block font-medium mb-1" %>
+    <%= form.select :day_type, CalendarType::DAY_TYPES, {}, class: "border rounded p-2" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Calendar Types</h1>
+  <%= link_to "New", new_admin_calendar_type_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+</div>
+
+<div class="bg-white shadow rounded p-4 mb-6">
+  <h2 class="font-bold mb-3">Bulk Create</h2>
+  <%= form_with url: bulk_create_admin_calendar_types_path, method: :post, class: "flex items-end space-x-4" do |form| %>
+    <div>
+      <%= form.label :start_date, "Start Date", class: "block font-medium mb-1" %>
+      <%= form.date_field :start_date, class: "border rounded p-2" %>
+    </div>
+    <div>
+      <%= form.label :end_date, "End Date", class: "block font-medium mb-1" %>
+      <%= form.date_field :end_date, class: "border rounded p-2" %>
+    </div>
+    <div>
+      <%= form.label :day_type, "Day Type", class: "block font-medium mb-1" %>
+      <%= form.select :day_type, CalendarType::DAY_TYPES, {}, class: "border rounded p-2" %>
+    </div>
+    <%= form.submit "Bulk Create", class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer" %>
+  <% end %>
+</div>
+
+<table class="w-full bg-white shadow rounded">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="text-left p-3">Date</th>
+      <th class="text-left p-3">Day Type</th>
+      <th class="text-left p-3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @calendar_types.each do |ct| %>
+      <tr class="border-t">
+        <td class="p-3"><%= ct.date %></td>
+        <td class="p-3"><%= ct.day_type %></td>
+        <td class="p-3">
+          <%= link_to "Edit", edit_admin_calendar_type_path(ct), class: "text-blue-600 hover:underline mr-2" %>
+          <%= button_to "Delete", admin_calendar_type_path(ct), method: :delete,
+              data: { turbo_confirm: "Are you sure?" },
+              class: "text-red-600 hover:underline bg-transparent border-0 cursor-pointer" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
