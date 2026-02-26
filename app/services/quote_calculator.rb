@@ -1,7 +1,7 @@
 class QuoteCalculator
   class PriceNotFoundError < StandardError; end
 
-  LineItem = Struct.new(:item_type, :day_type, :unit_price, :quantity, :subtotal, keyword_init: true)
+  LineItem = Struct.new(:date, :item_type, :day_type, :unit_price, :quantity, :subtotal, keyword_init: true)
   Result = Struct.new(:line_items, :total, keyword_init: true)
 
   ITEM_FIELDS = {
@@ -18,22 +18,28 @@ class QuoteCalculator
   end
 
   def calculate
-    day_type = CalendarType.day_type_for(@inquiry.desired_date)
+    dates = @inquiry.date_range.to_a
+    day_types = batch_day_types(dates)
     line_items = []
 
-    ITEM_FIELDS.each do |item_type, method|
-      next unless @inquiry.public_send(method)
+    dates.each do |date|
+      day_type = day_types[date]
 
-      unit_price = fetch_price(item_type, day_type)
-      subtotal = unit_price * @inquiry.num_people
+      ITEM_FIELDS.each do |item_type, method|
+        next unless @inquiry.public_send(method)
 
-      line_items << LineItem.new(
-        item_type: item_type,
-        day_type: day_type,
-        unit_price: unit_price,
-        quantity: @inquiry.num_people,
-        subtotal: subtotal
-      )
+        unit_price = fetch_price(item_type, day_type)
+        subtotal = unit_price * @inquiry.num_people
+
+        line_items << LineItem.new(
+          date: date,
+          item_type: item_type,
+          day_type: day_type,
+          unit_price: unit_price,
+          quantity: @inquiry.num_people,
+          subtotal: subtotal
+        )
+      end
     end
 
     total = line_items.sum(&:subtotal)
@@ -41,6 +47,11 @@ class QuoteCalculator
   end
 
   private
+
+  def batch_day_types(dates)
+    registered = CalendarType.where(date: dates).pluck(:date, :day_type).to_h
+    dates.index_with { |date| registered[date] || "weekday" }
+  end
 
   def fetch_price(item_type, day_type)
     PriceMaster.price_for(@facility, item_type, day_type)

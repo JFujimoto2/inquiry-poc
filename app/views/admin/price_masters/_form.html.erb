@@ -16,12 +16,12 @@
 
   <div>
     <%= form.label :item_type, "項目種別", class: "block font-medium mb-1" %>
-    <%= form.select :item_type, PriceMaster::ITEM_TYPES.map { |t| [t.titleize, t] }, {}, class: "border rounded p-2" %>
+    <%= form.select :item_type, item_type_options, {}, class: "border rounded p-2" %>
   </div>
 
   <div>
     <%= form.label :day_type, "日種別", class: "block font-medium mb-1" %>
-    <%= form.select :day_type, PriceMaster::DAY_TYPES.map { |t| [t.titleize, t] }, {}, class: "border rounded p-2" %>
+    <%= form.select :day_type, day_type_options, {}, class: "border rounded p-2" %>
   </div>
 
   <div>

@@ -8,7 +8,7 @@ RSpec.describe QuoteCalculator do
   end
 
   describe "#calculate" do
-    context "weekday: conference_room + lunch" do
+    context "single day weekday: conference_room + lunch" do
       let(:conference_room_price) { 5_000 }
       let(:lunch_price) { 1_500 }
       let(:num_people) { 10 }
@@ -21,6 +21,7 @@ RSpec.describe QuoteCalculator do
 
       let(:inquiry) do
         build(:inquiry, facility: facility, desired_date: Date.new(2026, 4, 1),
+              desired_end_date: Date.new(2026, 4, 1),
               num_people: num_people, conference_room: true, lunch: true,
               accommodation: false, breakfast: false, dinner: false)
       end
@@ -34,6 +35,50 @@ RSpec.describe QuoteCalculator do
         result = described_class.new(inquiry).calculate
         expect(result.line_items.size).to eq(2)
         expect(result.line_items.map(&:item_type)).to contain_exactly("conference_room", "lunch")
+      end
+
+      it "includes date in line items" do
+        result = described_class.new(inquiry).calculate
+        expect(result.line_items.first.date).to eq(Date.new(2026, 4, 1))
+      end
+    end
+
+    context "multi-day: 3 days with mixed day types" do
+      let(:conference_room_weekday_price) { 5_000 }
+      let(:conference_room_holiday_price) { 8_000 }
+      let(:num_people) { 10 }
+
+      before do
+        create_price("conference_room", "weekday", conference_room_weekday_price)
+        create_price("conference_room", "holiday", conference_room_holiday_price)
+        create(:calendar_type, date: Date.new(2026, 5, 3), day_type: "holiday")
+      end
+
+      let(:inquiry) do
+        build(:inquiry, facility: facility,
+              desired_date: Date.new(2026, 5, 1),
+              desired_end_date: Date.new(2026, 5, 3),
+              num_people: num_people, conference_room: true,
+              accommodation: false, breakfast: false, lunch: false, dinner: false)
+      end
+
+      it "calculates per-day pricing" do
+        result = described_class.new(inquiry).calculate
+        expect(result.line_items.size).to eq(3)
+      end
+
+      it "applies correct day_type per date" do
+        result = described_class.new(inquiry).calculate
+        day_types = result.line_items.map { |li| [li.date, li.day_type] }
+        expect(day_types).to include([Date.new(2026, 5, 1), "weekday"])
+        expect(day_types).to include([Date.new(2026, 5, 2), "weekday"])
+        expect(day_types).to include([Date.new(2026, 5, 3), "holiday"])
+      end
+
+      it "calculates correct total for mixed days" do
+        result = described_class.new(inquiry).calculate
+        expected = (conference_room_weekday_price * 2 + conference_room_holiday_price) * num_people
+        expect(result.total).to eq(expected)
       end
     end
 
@@ -50,6 +95,7 @@ RSpec.describe QuoteCalculator do
 
       let(:inquiry) do
         build(:inquiry, facility: facility, desired_date: holiday_date,
+              desired_end_date: holiday_date,
               num_people: num_people, accommodation: true,
               conference_room: false, breakfast: false, lunch: false, dinner: false)
       end
@@ -72,6 +118,7 @@ RSpec.describe QuoteCalculator do
 
       let(:inquiry) do
         build(:inquiry, facility: facility, desired_date: Date.new(2026, 7, 15),
+              desired_end_date: Date.new(2026, 7, 15),
               num_people: num_people, conference_room: true,
               accommodation: false, breakfast: false, lunch: false, dinner: false)
       end

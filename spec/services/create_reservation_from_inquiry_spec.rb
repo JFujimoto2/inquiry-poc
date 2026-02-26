@@ -9,6 +9,7 @@ RSpec.describe CreateReservationFromInquiry do
       contact_name: "Taro Yamada",
       email: "taro@acme.com",
       desired_date: Date.new(2026, 5, 1),
+      desired_end_date: Date.new(2026, 5, 3),
       num_people: 5,
       total_amount: 25_000
     )
@@ -57,6 +58,7 @@ RSpec.describe CreateReservationFromInquiry do
       reservation = described_class.new(inquiry).call
       expect(reservation.facility).to eq(facility)
       expect(reservation.check_in_date).to eq(Date.new(2026, 5, 1))
+      expect(reservation.check_out_date).to eq(Date.new(2026, 5, 3))
       expect(reservation.num_people).to eq(5)
       expect(reservation.total_amount).to eq(25_000)
     end

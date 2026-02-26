@@ -1,14 +1,14 @@
-# Admin user
+# 管理者ユーザー
 admin = User.find_or_create_by!(email_address: "admin@example.com") do |u|
   u.password = "password123"
   u.role = "admin"
 end
-puts "Admin user: #{admin.email_address}"
+puts "管理者ユーザー: #{admin.email_address}"
 
-# Facilities
+# 施設
 facilities_data = [
-  { name: "Mountain Lodge", sender_email: "info@mountain-lodge.example.com", sender_domain: "mountain-lodge.example.com", email_signature: "Mountain Lodge\nTel: 03-1234-5678" },
-  { name: "Seaside Resort", sender_email: "info@seaside-resort.example.com", sender_domain: "seaside-resort.example.com", email_signature: "Seaside Resort\nTel: 03-8765-4321" }
+  { name: "高原ロッジ", sender_email: "info@kogen-lodge.example.com", sender_domain: "kogen-lodge.example.com", email_signature: "高原ロッジ\n〒390-0000 長野県松本市高原1-2-3\nTel: 0263-12-3456\nFax: 0263-12-3457" },
+  { name: "海辺リゾート", sender_email: "info@umibe-resort.example.com", sender_domain: "umibe-resort.example.com", email_signature: "海辺リゾート\n〒413-0000 静岡県熱海市海岸4-5-6\nTel: 0557-65-4321\nFax: 0557-65-4322" }
 ]
 
 facilities = facilities_data.map do |data|
@@ -18,9 +18,9 @@ facilities = facilities_data.map do |data|
     f.email_signature = data[:email_signature]
   end
 end
-puts "Facilities: #{facilities.map(&:name).join(', ')}"
+puts "施設: #{facilities.map(&:name).join('、')}"
 
-# Calendar types (holidays for Golden Week 2026)
+# カレンダー種別（2026年ゴールデンウィーク）
 golden_week_dates = (Date.new(2026, 4, 29)..Date.new(2026, 5, 6))
 golden_week_dates.each do |date|
   CalendarType.find_or_create_by!(date: date) do |ct|
@@ -28,13 +28,13 @@ golden_week_dates.each do |date|
   end
 end
 
-# Day before holiday
+# 休前日
 CalendarType.find_or_create_by!(date: Date.new(2026, 4, 28)) do |ct|
   ct.day_type = "day_before_holiday"
 end
-puts "Calendar types: #{CalendarType.count} entries"
+puts "カレンダー種別: #{CalendarType.count}件"
 
-# Price masters - all combinations for both facilities
+# 料金マスタ — 全施設×全項目×全日種別
 price_data = {
   "conference_room" => { "weekday" => 5_000, "holiday" => 7_000, "day_before_holiday" => 6_000 },
   "accommodation" => { "weekday" => 10_000, "holiday" => 15_000, "day_before_holiday" => 12_000 },
@@ -52,44 +52,45 @@ facilities.each do |facility|
     end
   end
 end
-puts "Price masters: #{PriceMaster.count} entries"
+puts "料金マスタ: #{PriceMaster.count}件"
 
-# Email templates
+# メールテンプレート
 facilities.each do |facility|
   EmailTemplate.find_or_create_by!(facility: facility, template_type: "quote") do |et|
-    et.subject = "Quote for {{company_name}} - {{facility_name}}"
+    et.subject = "【#{facility.name}】{{company_name}}様 お見積りのご案内"
     et.body = <<~BODY
-      Dear {{contact_name}},
+      {{contact_name}} 様
 
-      Thank you for your inquiry at {{facility_name}}.
-      Please find your quote attached for {{num_people}} people on {{desired_date}}.
+      この度は#{facility.name}へお問い合わせいただき、誠にありがとうございます。
+      ご依頼いただきました内容にてお見積りを作成いたしましたので、添付ファイルをご確認ください。
 
-      Total: ¥{{total_amount}}
+      ■ ご利用日程: {{desired_date}} 〜 {{desired_end_date}}
+      ■ ご利用人数: {{num_people}}名
+      ■ お見積り金額: ¥{{total_amount}}
 
-      If you have any questions, please don't hesitate to contact us.
+      ご不明な点がございましたら、お気軽にお問い合わせください。
 
-      Best regards,
-      #{facility.name} Staff
+      #{facility.email_signature}
     BODY
   end
 
   EmailTemplate.find_or_create_by!(facility: facility, template_type: "reservation_confirmation") do |et|
-    et.subject = "Reservation Confirmed - {{facility_name}}"
+    et.subject = "【#{facility.name}】{{company_name}}様 ご予約確定のお知らせ"
     et.body = <<~BODY
-      Dear {{contact_name}},
+      {{contact_name}} 様
 
-      Your reservation at {{facility_name}} has been confirmed.
+      #{facility.name}をご利用いただきありがとうございます。
+      下記の内容でご予約が確定いたしましたのでお知らせいたします。
 
-      Check-in: {{check_in_date}}
-      Number of guests: {{num_people}}
-      Total: ¥{{total_amount}}
+      ■ チェックイン: {{check_in_date}}
+      ■ ご利用人数: {{num_people}}名
+      ■ 合計金額: ¥{{total_amount}}
 
-      We look forward to welcoming you.
+      当日のお越しをお待ちしております。
 
-      Best regards,
-      #{facility.name} Staff
+      #{facility.email_signature}
     BODY
   end
 end
-puts "Email templates: #{EmailTemplate.count} entries"
-puts "Seed complete!"
+puts "メールテンプレート: #{EmailTemplate.count}件"
+puts "シード完了！"

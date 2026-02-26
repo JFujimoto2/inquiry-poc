@@ -11,7 +11,7 @@
         <tr>
           <th class="text-left p-3">項目種別</th>
           <% CalendarType::DAY_TYPES.each do |day_type| %>
-            <th class="text-left p-3"><%= day_type.titleize %></th>
+            <th class="text-left p-3"><%= day_type_label(day_type) %></th>
           <% end %>
           <th class="text-left p-3">操作</th>
         </tr>
@@ -19,7 +19,7 @@
       <tbody>
         <% PriceMaster::ITEM_TYPES.each do |item_type| %>
           <tr class="border-t">
-            <td class="p-3 font-medium"><%= item_type.titleize %></td>
+            <td class="p-3 font-medium"><%= item_type_label(item_type) %></td>
             <% CalendarType::DAY_TYPES.each do |day_type| %>
               <% pm = facility.price_masters.find { |p| p.item_type == item_type && p.day_type == day_type } %>
               <td class="p-3">

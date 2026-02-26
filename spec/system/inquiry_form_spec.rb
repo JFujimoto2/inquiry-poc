@@ -15,15 +15,16 @@ RSpec.describe "Inquiry form", type: :system do
     visit new_inquiry_path
 
     select "Test Resort", from: "施設"
-    fill_in "利用希望日", with: "2026-04-01"
+    fill_in "利用開始日", with: "2026-04-01"
+    fill_in "利用終了日", with: "2026-04-01"
     fill_in "利用人数", with: "10"
     check "会議室"
     check "昼食"
-    fill_in "会社名", with: "Test Corp"
-    fill_in "担当者名", with: "Taro Yamada"
+    fill_in "貴社名", with: "Test Corp"
+    fill_in "ご担当者氏名", with: "Taro Yamada"
     fill_in "メールアドレス", with: "taro@example.com"
 
-    click_button "問い合わせを送信"
+    click_button "お問い合わせを送信"
 
     expect(page).to have_content("お問い合わせありがとうございます")
   end
@@ -31,8 +32,8 @@ RSpec.describe "Inquiry form", type: :system do
   it "shows validation errors" do
     visit new_inquiry_path
 
-    click_button "問い合わせを送信"
+    click_button "お問い合わせを送信"
 
-    expect(page).to have_content("can't be blank")
+    expect(page).to have_content("入力内容をご確認ください")
   end
 end

@@ -16,7 +16,7 @@
     </div>
     <div>
       <%= form.label :day_type, "日種別", class: "block font-medium mb-1" %>
-      <%= form.select :day_type, CalendarType::DAY_TYPES, {}, class: "border rounded p-2" %>
+      <%= form.select :day_type, day_type_options, {}, class: "border rounded p-2" %>
     </div>
     <%= form.submit "一括作成", class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer" %>
   <% end %>
@@ -34,7 +34,7 @@
     <% @calendar_types.each do |ct| %>
       <tr class="border-t">
         <td class="p-3"><%= ct.date %></td>
-        <td class="p-3"><%= ct.day_type %></td>
+        <td class="p-3"><%= day_type_label(ct.day_type) %></td>
         <td class="p-3">
           <%= link_to "編集", edit_admin_calendar_type_path(ct), class: "text-blue-600 hover:underline mr-2" %>
           <%= button_to "削除", admin_calendar_type_path(ct), method: :delete,

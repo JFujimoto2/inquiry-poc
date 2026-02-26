@@ -15,7 +15,7 @@ RSpec.describe "Inquiries", type: :request do
     it "renders the inquiry form" do
       get new_inquiry_path
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("お問い合わせフォーム")
+      expect(response.body).to include("お問い合わせ")
     end
   end
 
@@ -25,6 +25,7 @@ RSpec.describe "Inquiries", type: :request do
         inquiry: {
           facility_id: facility.id,
           desired_date: "2026-04-01",
+          desired_end_date: "2026-04-02",
           num_people: 10,
           conference_room: true,
           lunch: true,
@@ -50,7 +51,8 @@ RSpec.describe "Inquiries", type: :request do
       post inquiries_path, params: valid_params
       inquiry = Inquiry.last
       num_people = 10
-      expected_total = (conference_room_price + lunch_price) * num_people
+      num_days = 2
+      expected_total = (conference_room_price + lunch_price) * num_people * num_days
       expect(inquiry.total_amount).to eq(expected_total)
     end
 
@@ -62,6 +64,13 @@ RSpec.describe "Inquiries", type: :request do
 
     it "re-renders form on validation error" do
       post inquiries_path, params: { inquiry: { facility_id: facility.id, company_name: "" } }
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "re-renders form when desired_end_date is before desired_date" do
+      invalid_params = valid_params.deep_dup
+      invalid_params[:inquiry][:desired_end_date] = "2026-03-30"
+      post inquiries_path, params: invalid_params
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end

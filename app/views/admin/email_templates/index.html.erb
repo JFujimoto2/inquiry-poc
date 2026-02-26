@@ -16,7 +16,7 @@
     <% @email_templates.each do |et| %>
       <tr class="border-t">
         <td class="p-3"><%= et.facility.name %></td>
-        <td class="p-3"><%= et.template_type.titleize %></td>
+        <td class="p-3"><%= template_type_label(et.template_type) %></td>
         <td class="p-3"><%= et.subject %></td>
         <td class="p-3">
           <%= link_to "詳細", admin_email_template_path(et), class: "text-blue-600 hover:underline mr-2" %>

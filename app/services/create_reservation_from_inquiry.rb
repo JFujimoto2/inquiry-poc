@@ -31,6 +31,7 @@ class CreateReservationFromInquiry
       facility: @inquiry.facility,
       status: Reservation::STATUS_PENDING_CONFIRMATION,
       check_in_date: @inquiry.desired_date,
+      check_out_date: @inquiry.desired_end_date,
       num_people: @inquiry.num_people,
       total_amount: @inquiry.total_amount
     )

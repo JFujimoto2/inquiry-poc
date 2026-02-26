@@ -31,7 +31,8 @@ RSpec.describe QuoteProcessingJob, type: :job do
     it "updates total_amount on the inquiry" do
       described_class.perform_now(quote.id)
 
-      expected_total = conference_room_price * inquiry.num_people
+      num_days = inquiry.date_range.count
+      expected_total = conference_room_price * inquiry.num_people * num_days
       expect(inquiry.reload.total_amount).to eq(expected_total)
     end
 

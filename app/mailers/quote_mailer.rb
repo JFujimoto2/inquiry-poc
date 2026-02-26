@@ -28,6 +28,7 @@ class QuoteMailer < ApplicationMailer
       "company_name" => @inquiry.company_name,
       "contact_name" => @inquiry.contact_name,
       "desired_date" => @inquiry.desired_date.to_s,
+      "desired_end_date" => @inquiry.desired_end_date.to_s,
       "num_people" => @inquiry.num_people.to_s,
       "total_amount" => @inquiry.total_amount.to_s
     }

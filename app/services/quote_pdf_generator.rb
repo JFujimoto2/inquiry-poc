@@ -1,16 +1,21 @@
 class QuotePdfGenerator
-  FONT_PATH = Rails.root.join("app", "assets", "fonts", "NotoSansJP-Regular.ttf")
-  FONT_BOLD_PATH = Rails.root.join("app", "assets", "fonts", "NotoSansJP-Bold.ttf")
+  FONT_PATH = Rails.root.join("app", "assets", "fonts", "ipaexg.ttf")
 
   ITEM_TYPE_LABELS = {
-    "conference_room" => "Conference Room",
-    "accommodation" => "Accommodation",
-    "breakfast" => "Breakfast",
-    "lunch" => "Lunch",
-    "dinner" => "Dinner"
+    "conference_room" => "会議室",
+    "accommodation" => "宿泊",
+    "breakfast" => "朝食",
+    "lunch" => "昼食",
+    "dinner" => "夕食"
   }.freeze
 
-  HEADER_TITLE = "Quote"
+  DAY_TYPE_LABELS = {
+    "weekday" => "平日",
+    "holiday" => "休日",
+    "day_before_holiday" => "休前日"
+  }.freeze
+
+  HEADER_TITLE = "お見積書"
   TITLE_FONT_SIZE = 24
   SUBTITLE_FONT_SIZE = 16
   SUBHEADER_FONT_SIZE = 14
@@ -51,12 +56,12 @@ class QuotePdfGenerator
   def setup_fonts(pdf)
     if FONT_PATH.exist?
       pdf.font_families.update(
-        "NotoSansJP" => {
+        "IPAexGothic" => {
           normal: FONT_PATH.to_s,
-          bold: FONT_BOLD_PATH.exist? ? FONT_BOLD_PATH.to_s : FONT_PATH.to_s
+          bold: FONT_PATH.to_s
         }
       )
-      pdf.font "NotoSansJP"
+      pdf.font "IPAexGothic"
     end
   end
 
@@ -68,27 +73,28 @@ class QuotePdfGenerator
   end
 
   def render_company_info(pdf)
-    pdf.text "To: #{@inquiry.company_name}", size: BODY_FONT_SIZE
-    pdf.text "Attn: #{@inquiry.contact_name}", size: BODY_FONT_SIZE
-    pdf.text "Date: #{Date.current}", size: DETAIL_FONT_SIZE
+    pdf.text "#{@inquiry.company_name} 御中", size: BODY_FONT_SIZE
+    pdf.text "ご担当: #{@inquiry.contact_name} 様", size: BODY_FONT_SIZE
+    pdf.text "発行日: #{Date.current}", size: DETAIL_FONT_SIZE
     pdf.move_down SPACING_MEDIUM
   end
 
   def render_inquiry_details(pdf)
-    pdf.text "Desired Date: #{@inquiry.desired_date}", size: DETAIL_FONT_SIZE
-    pdf.text "Number of People: #{@inquiry.num_people}", size: DETAIL_FONT_SIZE
+    pdf.text "利用日程: #{@inquiry.desired_date} 〜 #{@inquiry.desired_end_date}", size: DETAIL_FONT_SIZE
+    pdf.text "利用人数: #{@inquiry.num_people}名", size: DETAIL_FONT_SIZE
     pdf.move_down SPACING_MEDIUM
   end
 
   def render_line_items(pdf, result)
     return if result.line_items.empty?
 
-    table_data = [ [ "Item", "Day Type", "Unit Price", "Qty", "Subtotal" ] ]
+    table_data = [ [ "日付", "項目", "日種別", "単価", "人数", "小計" ] ]
 
     result.line_items.each do |item|
       table_data << [
+        item.date.to_s,
         ITEM_TYPE_LABELS.fetch(item.item_type, item.item_type),
-        item.day_type.titleize,
+        DAY_TYPE_LABELS.fetch(item.day_type, item.day_type),
         format_currency(item.unit_price),
         item.quantity.to_s,
         format_currency(item.subtotal)
@@ -98,13 +104,13 @@ class QuotePdfGenerator
     pdf.table(table_data, header: true, width: pdf.bounds.width) do
       row(0).font_style = :bold
       row(0).background_color = TABLE_HEADER_BG_COLOR
-      columns(2..4).align = :right
+      columns(3..5).align = :right
     end
     pdf.move_down SPACING_SMALL
   end
 
   def render_total(pdf, result)
-    pdf.text "Total: #{format_currency(result.total)}", size: SUBTITLE_FONT_SIZE, style: :bold, align: :right
+    pdf.text "合計: #{format_currency(result.total)}", size: SUBTITLE_FONT_SIZE, style: :bold, align: :right
     pdf.move_down SPACING_LARGE
   end
 

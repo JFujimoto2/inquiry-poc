@@ -9,7 +9,7 @@
       <th class="text-left p-3">施設</th>
       <th class="text-left p-3">会社名</th>
       <th class="text-left p-3">担当者</th>
-      <th class="text-left p-3">希望日</th>
+      <th class="text-left p-3">利用日程</th>
       <th class="text-left p-3">見積</th>
       <th class="text-left p-3">予約</th>
       <th class="text-left p-3">操作</th>
@@ -22,7 +22,9 @@
         <td class="p-3"><%= inquiry.facility.name %></td>
         <td class="p-3"><%= inquiry.company_name %></td>
         <td class="p-3"><%= inquiry.contact_name %></td>
-        <td class="p-3"><%= inquiry.desired_date %></td>
+        <td class="p-3">
+          <%= inquiry.desired_date %> ~ <%= inquiry.desired_end_date %>
+        </td>
         <td class="p-3"><%= inquiry.quote ? quote_status_label(inquiry.quote.status) : "-" %></td>
         <td class="p-3">
           <% if inquiry.reservation %>
