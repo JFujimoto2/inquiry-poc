@@ -69,10 +69,10 @@ RSpec.describe QuoteCalculator do
 
       it "applies correct day_type per date" do
         result = described_class.new(inquiry).calculate
-        day_types = result.line_items.map { |li| [li.date, li.day_type] }
-        expect(day_types).to include([Date.new(2026, 5, 1), "weekday"])
-        expect(day_types).to include([Date.new(2026, 5, 2), "weekday"])
-        expect(day_types).to include([Date.new(2026, 5, 3), "holiday"])
+        day_types = result.line_items.map { |li| [ li.date, li.day_type ] }
+        expect(day_types).to include([ Date.new(2026, 5, 1), "weekday" ])
+        expect(day_types).to include([ Date.new(2026, 5, 2), "weekday" ])
+        expect(day_types).to include([ Date.new(2026, 5, 3), "holiday" ])
       end
 
       it "calculates correct total for mixed days" do
