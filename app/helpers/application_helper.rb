@@ -86,14 +86,14 @@ module ApplicationHelper
   end
 
   def item_type_options
-    PriceMaster::ITEM_TYPES.map { |t| [item_type_label(t), t] }
+    PriceMaster::ITEM_TYPES.map { |t| [ item_type_label(t), t ] }
   end
 
   def day_type_options
-    CalendarType::DAY_TYPES.map { |t| [day_type_label(t), t] }
+    CalendarType::DAY_TYPES.map { |t| [ day_type_label(t), t ] }
   end
 
   def template_type_options
-    EmailTemplate::TEMPLATE_TYPES.map { |t| [template_type_label(t), t] }
+    EmailTemplate::TEMPLATE_TYPES.map { |t| [ template_type_label(t), t ] }
   end
 end
