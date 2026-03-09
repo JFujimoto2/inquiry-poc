@@ -48,6 +48,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Download Japanese font for PDF generation
+        run: |
+          mkdir -p app/assets/fonts
+          curl -sL -o /tmp/IPAexfont00401.zip https://moji.or.jp/wp-content/ipafont/IPAexfont/IPAexfont00401.zip
+          unzip -o /tmp/IPAexfont00401.zip -d /tmp && cp /tmp/IPAexfont00401/ipaexg.ttf app/assets/fonts/
+
       - name: Set up database
         run: bin/rails db:schema:load
 
